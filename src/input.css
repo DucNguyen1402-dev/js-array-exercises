@@ -8,6 +8,20 @@
   }
 }
 
+@layer components {
+  .custom-list-item {
+    @apply relative px-9 font-medium;
+    counter-increment: item;
+  }
+
+  .custom-list-item::before {
+    @apply absolute left-0 flex h-6 w-6 items-center justify-center rounded-sm text-white;
+    background: linear-gradient(to bottom right, #3b82f6, #06b6d4);
+    content: counter(item);
+  }
+}
+
+
 /* Chrome, Safari, Edge, Opera */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {

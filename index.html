@@ -19,7 +19,7 @@
     class="relative min-h-screen overflow-x-hidden bg-linear-to-br from-slate-900 via-slate-800 to-slate-700 p-2"
   >
     <div
-      class="relative mx-120 max-w-4xl h-170 overflow-hidden rounded-lg bg-linear-to-br from-slate-800 to-slate-700 p-6 shadow-md"
+      class="relative mx-120 h-170 max-w-4xl overflow-hidden rounded-lg bg-linear-to-br from-slate-800 to-slate-700 p-6 shadow-md"
     >
       <div
         class="error__area absolute top-12 right-0 w-50 translate-x-full rounded-sm bg-rose-500 px-6 py-2 text-sm text-white transition duration-600 ease-linear"
@@ -36,11 +36,11 @@
       </div>
 
       <div
-        class="relative flex -translate-x-[120%] animate-[moveLeftToRight_1s_linear_1s_forwards] items-center gap-2 mt-8"
+        class="relative mt-8 flex -translate-x-[120%] animate-[moveLeftToRight_1s_linear_1s_forwards] items-center gap-2"
       >
         <div class="mx-auto w-1/2 animate-[stopSuddenly_1s_ease-out_8s]">
           <div
-            class=" flex justify-center gap-4 rounded-md bg-blue-500 p-4 shadow-md"
+            class="flex justify-center gap-4 rounded-md bg-blue-500 p-4 shadow-md"
           >
             <input
               type="number"
@@ -73,7 +73,7 @@
         </div>
       </div>
       <div
-        class="mb-6 rounded-sm border-l-5 border-orange-500 bg-slate-100 p-4 mt-8"
+        class="mt-8 mb-6 rounded-sm border-l-5 border-orange-500 bg-slate-100 p-4"
       >
         <p class="font-semibold text-gray-600">
           Current Array: [
@@ -81,10 +81,12 @@
         </p>
       </div>
 
-      <main class="relative  h-85 pb-2 card-container">
+      <main class=" relative">
+        <div class="card-container relative h-85 pb-2 grid grid-cols-5 gap-4 max-w-2xl  mx-auto ">
+    
         <!-- feature 1 -->
         <article
-          class="card closed-card card--positive-sum group relative z-0  w-100 cursor-pointer ease-out  overflow-hidden rounded-md border border-slate-100 bg-slate-100 p-5 transition-all duration-500 hover:-translate-y-2 will-change-transform"
+          class="card closed-card card--positive-sum group relative w-100 cursor-pointer overflow-hidden rounded-md border border-slate-100 bg-slate-100 p-5 transition-all duration-500 ease-out will-change-transform hover:-translate-y-2"
         >
           <div class="mb-4">
             <div class="mb-4 flex items-center gap-3">
@@ -106,7 +108,7 @@
           </div>
 
           <button
-            class="sum-btn mb-4 w-full cursor-pointer rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors duration-200 hover:bg-blue-700 active:scale-95"
+            class="sum-btn mb-4 w-full cursor-pointer rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors duration-300 hover:bg-blue-700 active:scale-95"
           >
             CALCULATE
           </button>
@@ -139,96 +141,115 @@
               <span class="positive-sum__label text-gray-500">Result:</span>
               <span
                 class="positive-sum__value rounded-md bg-cyan-500 px-2.5 py-0.5 font-bold text-white"
-                >0</span
+                ></span
               >
             </div>
           </div>
           <div
-            class="card-overlay absolute inset-0 z-10 flex items-center justify-center bg-linear-to-br from-blue-500 to-cyan-500 transition duration-800 group-hover:from-blue-600 group-hover:to-cyan-600"
+            class="card-overlay absolute inset-0 z-30 flex items-center justify-center bg-linear-to-br from-blue-500 to-cyan-500 transition duration-800 group-hover:from-blue-600 group-hover:to-cyan-600"
           >
             <span class="text-5xl font-bold text-white">1</span>
           </div>
         </article>
-
         <!-- feature 2 -->
-        <!-- <div class="border p-4 rounded hover:shadow-sm transition bg-white">
-            <h3 class="font-bold mb-2">6. Đổi chỗ</h3>
-            <div class="flex gap-2 mb-2">
-              <input
-                type="number"
-                placeholder="Vị trí 1"
-                class="border p-1 rounded w-full text-sm"
-              />
-              <input
-                type="number"
-                placeholder="Vị trí 2"
-                class="border p-1 rounded w-full text-sm"
-              />
+           <article
+          class="card closed-card card--positive-sum group relative w-100 cursor-pointer overflow-hidden rounded-md border border-slate-100 bg-slate-100 p-5 transition-all duration-500 ease-out will-change-transform hover:-translate-y-2"
+        >
+          <div class="mb-4">
+            <div class="mb-4 flex items-center gap-3">
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-500 text-white"
+              >
+                <span class="text-lg font-bold">02</span>
+              </div>
+              <h3
+                class="bg-linear-to-br from-indigo-500 to-purple-500 bg-clip-text text-lg font-bold tracking-wide text-transparent"
+              >
+              POSITIVE COUNTER
+              </h3>
             </div>
+
+            <p class="text-sm text-gray-400">
+              Determine the total count of positive values present.
+            </p>
+          </div>
+
+          <button
+            class="sum-btn mb-4 w-full cursor-pointer rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors duration-300 hover:bg-blue-700 active:scale-95"
+          >
+           COUNT NOW
+          </button>
+          <div class="loading-icon hidden">
             <button
-              class="bg-blue-500 text-white px-4 py-1 rounded text-sm mb-2"
+              class="relative z-10 mb-4 flex gap-1.5 overflow-hidden rounded-full border border-gray-400 px-8 py-0.5 text-sm"
             >
-              Đổi chỗ
+              <span class="loading-text z-10">Loading...</span>
+
+              <div
+                class="loading-icon__animation absolute inset-0 z-0 animate-[loadingMove_3s_ease-out_forwards] bg-green-500"
+              ></div>
             </button>
-            <div class="p-2 bg-green-50 text-green-700 rounded text-sm">
-              Kết quả: ...
+          </div>
+
+          <div class="positive-sum__list hidden">
+            <div
+              class="mb-6 flex flex-col gap-1 rounded-lg border border-dashed border-gray-300 p-3 text-sm text-gray-500"
+            >
+              <span>Positive numbers in your array:</span>
+              <span
+                class="positive-sum__numbers font-semibold text-rose-500"
+              ></span>
             </div>
-          </div> -->
+          </div>
+          <div class="positive-sum__area hidden">
+            <div
+              class="flex items-center gap-2 rounded-lg border border-dashed border-orange-500 bg-gray-50 p-3"
+            >
+              <span class="positive-sum__label text-gray-500">Total count:</span>
+              <span
+                class="positive-sum__value rounded-md bg-cyan-500 px-2.5 py-0.5 font-bold text-white"
+                ></span
+              >
+            </div>
+          </div>
+          <div
+            class="card-overlay absolute inset-0 z-30 flex items-center justify-center bg-linear-to-br from-blue-500 to-cyan-500 transition duration-800 group-hover:from-blue-600 group-hover:to-cyan-600"
+          >
+            <span class="text-5xl font-bold text-white">2</span>
+          </div>
+           
+        </article>
+    </div>
+      <div class="main-backdrop hidden absolute inset-0 bg-slate-950/60 backdrop-blur-sm backdrop-saturate-50 z-10 pointer-event-none"></div>
       </main>
+
     </div>
 
     <div class="absolute top-10 right-0 translate-x-10">
       <ol
         class="list w-110 space-y-4 rounded-md bg-linear-to-br from-slate-800 to-slate-700 pt-4 pb-8 pl-4 text-white [counter-reset:item]"
       >
-        <li
-          class="relative px-9 font-medium [counter-increment:item] before:absolute before:left-0 before:flex before:h-6 before:w-6 before:items-center before:justify-center before:rounded-sm before:bg-linear-to-br before:from-blue-500 before:to-cyan-500 before:text-white before:content-[counter(item)]"
-        >
-          Sum all positive numbers in the array
-        </li>
-        <li
-          class="relative px-9 font-medium [counter-increment:item] before:absolute before:left-0 before:flex before:h-6 before:w-6 before:items-center before:justify-center before:rounded-sm before:bg-linear-to-br before:from-blue-500 before:to-cyan-500 before:text-white before:content-[counter(item)]"
-        >
+        <li class="custom-list-item">Sum all positive numbers in the array</li>
+
+        <li class="custom-list-item">
           Count how many positive numbers in the array
         </li>
-        <li
-          class="relative px-9 font-medium [counter-increment:item] before:absolute before:left-0 before:flex before:h-6 before:w-6 before:items-center before:justify-center before:rounded-sm before:bg-linear-to-br before:from-blue-500 before:to-cyan-500 before:text-white before:content-[counter(item)]"
-        >
-          Find the smallest number in the array
-        </li>
-        <li
-          class="relative px-9 font-medium [counter-increment:item] before:absolute before:left-0 before:flex before:h-6 before:w-6 before:items-center before:justify-center before:rounded-sm before:bg-linear-to-br before:from-blue-500 before:to-cyan-500 before:text-white before:content-[counter(item)]"
-        >
+        <li class="custom-list-item">Find the smallest number in the array</li>
+        <li class="custom-list-item">
           Find the smallest positive number in the array
         </li>
-        <li
-          class="relative px-9 font-medium [counter-increment:item] before:absolute before:left-0 before:flex before:h-6 before:w-6 before:items-center before:justify-center before:rounded-sm before:bg-linear-to-br before:from-blue-500 before:to-cyan-500 before:text-white before:content-[counter(item)]"
-        >
-          Find the last even number in the array
-        </li>
-        <li
-          class="relative px-9 font-medium [counter-increment:item] before:absolute before:left-0 before:flex before:h-6 before:w-6 before:items-center before:justify-center before:rounded-sm before:bg-linear-to-br before:from-blue-500 before:to-cyan-500 before:text-white before:content-[counter(item)]"
-        >
+        <li class="custom-list-item">Find the last even number in the array</li>
+        <li class="custom-list-item">
           Swap two elements based on their positions
         </li>
-        <li
-          class="relative px-9 font-medium [counter-increment:item] before:absolute before:left-0 before:flex before:h-6 before:w-6 before:items-center before:justify-center before:rounded-sm before:bg-linear-to-br before:from-blue-500 before:to-cyan-500 before:text-white before:content-[counter(item)]"
-        >
-          Sort the array in ascending order
-        </li>
-        <li
-          class="relative px-9 font-medium [counter-increment:item] before:absolute before:left-0 before:flex before:h-6 before:w-6 before:items-center before:justify-center before:rounded-sm before:bg-linear-to-br before:from-blue-500 before:to-cyan-500 before:text-white before:content-[counter(item)]"
-        >
+        <li class="custom-list-item">Sort the array in ascending order</li>
+        <li class="custom-list-item">
           Find the first prime number in the array
         </li>
-        <li
-          class="relative px-9 font-medium [counter-increment:item] before:absolute before:left-0 before:flex before:h-6 before:w-6 before:items-center before:justify-center before:rounded-sm before:bg-linear-to-br before:from-blue-500 before:to-cyan-500 before:text-white before:content-[counter(item)]"
-        >
+        <li class="custom-list-item">
           Count integers after adding real numbers
         </li>
-        <li
-          class="relative px-9 font-medium [counter-increment:item] before:absolute before:left-0 before:flex before:h-6 before:w-6 before:items-center before:justify-center before:rounded-sm before:bg-linear-to-br before:from-blue-500 before:to-cyan-500 before:text-white before:content-[counter(item)]"
-        >
+        <li class="custom-list-item">
           Compare the number of positive and negative values
         </li>
       </ol>

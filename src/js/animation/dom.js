@@ -7,6 +7,7 @@ export function getAnimationUIDOM() {
     cards: $all('.card'),
     cardContainer: $('.card-container'),
     loadingAnimation: $('.loading-icon__animation'),
+    mainBackdrop: $(".main-backdrop ")
   };
 }
 

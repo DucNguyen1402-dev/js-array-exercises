@@ -1,4 +1,4 @@
-import { DOM} from './dom.js';
+import { DOM } from './dom.js';
 
 /**
  * =========================================
@@ -13,7 +13,6 @@ DOM.dogEl.addEventListener('animationstart', () => {
     DOM.dogEl.classList.add('hidden');
   }, 3000);
 });
-
 
 /**
  
@@ -45,13 +44,12 @@ const ALL_OVERLAY_STATE_CLASSES = Object.values(overlayState).flat();
  */
 const cardState = {
   open: ['actived-card'],
-  closed: ['closed-card', 'hover:-translate-y-2'],
+  closed: ['closed-card', 'hover:-translate-y-2', 'cursor-pointer'],
 };
 
 const ALL_CARD_STATE_CLASSES = Object.values(cardState).flat();
 
 /* ============== 2.2 ANIMATION LOGIC ============== */
-
 
 /**
  * Updates the overlay visibility state.
@@ -73,7 +71,6 @@ function cardToOpen(card, state = true) {
   card.classList.add(...cardState[state ? 'open' : 'closed']);
 }
 
-
 /**
  * Maps each card element to its corresponding overlay element for quick lookup.
  * @type {Map<HTMLElement, HTMLElement>}
@@ -86,20 +83,34 @@ DOM.cards.forEach((card) => {
 
 /**
  * Handles card selection via event delegation.
- * Opens the clicked card and its overlay if no card is currently active.
+ * If no card is active, it creates a placeholder to prevent layout shift,
+ * then triggers the opening animations for the selected card and its overlay.
  */
 
+let placeholder;
 DOM.cardContainer.addEventListener('click', (e) => {
   const card = e.target.closest('.card');
   if (!card) return;
 
   if (activeCard) return;
-  const cardOverlay = overlayMap.get(card);
-  cardOverlayToOpen(cardOverlay, true);
-  cardToOpen(card, true);
-  activeCard = card;
-});
 
+// Create a placeholder to maintain layout flow when the card switches to absolute/fixed positioning
+  const rect = card.getBoundingClientRect();
+  placeholder = document.createElement('div');
+  placeholder.style.width = rect.width + 'px';
+  placeholder.style.height = rect.height + 'px';
+
+  card.parentNode.insertBefore(placeholder, card);
+  const cardOverlay = overlayMap.get(card);
+  card.classList.add("z-20");
+  cardOverlayToOpen(cardOverlay, true);
+  
+  cardToOpen(card, true);
+   DOM.mainBackdrop.classList.remove("hidden");
+
+  activeCard = card;
+  
+});
 
 /**
  * Closes the currently active card and its overlay when the Escape key is pressed.
@@ -108,10 +119,19 @@ DOM.cardContainer.addEventListener('click', (e) => {
 function handleGlobalKeydown(e) {
   if (e.key !== 'Escape') return;
   const cardOverlay = overlayMap.get(activeCard);
-
-  cardOverlayToOpen(cardOverlay, false);
   cardToOpen(activeCard, false);
-  activeCard = null;
+  
+  if (placeholder) {
+    placeholder.remove();
+    placeholder = null;
+  }
+ cardOverlayToOpen(cardOverlay, false);
+ 
+    activeCard.classList.remove("z-20");
+    setTimeout(()=>{
+    DOM.mainBackdrop.classList.add("hidden");
+  }, 20);
+   activeCard = null;
 }
 
 /**

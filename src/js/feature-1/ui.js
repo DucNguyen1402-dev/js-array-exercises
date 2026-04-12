@@ -82,5 +82,5 @@ export function resetUI({
   setListDisplayHidden(listDisplay, true);
   setSummaryAreaHidden(summaryArea, true);
   positiveNumbers.textContent = "";
-  valueDisplay.textContent = "0";
+  valueDisplay.textContent = "";
 }
