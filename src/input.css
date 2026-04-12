@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@keyframes moveLeftToRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes stopSuddenly {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+
+@keyframes dogMoveToHidden {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(200%);
+  }
+}
+
+
+@keyframes loadingMove{
+  from {
+    transform: translateX(-100%);
+  }
+  to{
+    transform: translateX(0);
+  }
+}
+
+
+.closed-card{
+  width: 100px !important;
+  height:100px !important;
+  border-radius: 10px;
+ 
+
+}
+
+.actived-card{
+   position: absolute !important;
+   top: 50%;
+   left: 50%;
+   z-index:50 !important;
+   transform: translate(-50%, -50%);
+  
+}
