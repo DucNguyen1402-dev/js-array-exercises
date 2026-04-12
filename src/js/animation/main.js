@@ -17,7 +17,7 @@ DOM.dogEl.addEventListener('animationstart', () => {
 /**
  
  * =========================================
- *    2. CARD OPEN ANIMATION
+ *        2. CARD OPEN ANIMATION
  * =========================================
  */
 
@@ -44,12 +44,34 @@ const ALL_OVERLAY_STATE_CLASSES = Object.values(overlayState).flat();
  */
 const cardState = {
   open: ['actived-card'],
-  closed: ['closed-card', 'hover:-translate-y-2', 'cursor-pointer'],
+  closed: ['closed-card'],
 };
 
 const ALL_CARD_STATE_CLASSES = Object.values(cardState).flat();
 
+/**
+ * Flag to track if the user has interacted with the card guide for the first time.
+ * @type {boolean}
+ */
+let hasInteracted = false;
+
 /* ============== 2.2 ANIMATION LOGIC ============== */
+
+
+/**
+ * Handles the initial user interaction with the card guide.
+ * Updates the interaction state and triggers a one-time slide-out animation.
+ * @param {HTMLElement} cardGuide - The guide element to animate.
+ * @param {boolean} hasInteracted - Current interaction state.
+ */
+
+function handleFirstInteraction(cardGuide, hasInteracted) {
+  if (!hasInteracted) {
+    hasInteracted = true;
+
+    cardGuide.classList.add('translate-y-60');
+  }
+}
 
 /**
  * Updates the overlay visibility state.
@@ -71,6 +93,9 @@ function cardToOpen(card, state = true) {
   card.classList.add(...cardState[state ? 'open' : 'closed']);
 }
 
+function backdropToVisible(backdrop, state = true) {
+  backdrop.classList.toggle('hidden', !state);
+}
 /**
  * Maps each card element to its corresponding overlay element for quick lookup.
  * @type {Map<HTMLElement, HTMLElement>}
@@ -82,34 +107,76 @@ DOM.cards.forEach((card) => {
 });
 
 /**
- * Handles card selection via event delegation.
- * If no card is active, it creates a placeholder to prevent layout shift,
- * then triggers the opening animations for the selected card and its overlay.
+ * Creates and inserts a placeholder element before the card to preserve layout
+ * dimensions when the card is pulled out of the document flow.
+ * @param {HTMLElement} card - The card element to mimic.
  */
-
-let placeholder;
-DOM.cardContainer.addEventListener('click', (e) => {
-  const card = e.target.closest('.card');
-  if (!card) return;
-
-  if (activeCard) return;
-
-// Create a placeholder to maintain layout flow when the card switches to absolute/fixed positioning
+function createPlaceholder(card) {
   const rect = card.getBoundingClientRect();
   placeholder = document.createElement('div');
   placeholder.style.width = rect.width + 'px';
   placeholder.style.height = rect.height + 'px';
 
   card.parentNode.insertBefore(placeholder, card);
+}
+
+/**
+ * Toggles the card's z-index to manage its stacking order relative to the overlay.
+ * @param {HTMLElement} card - The card element.
+ * @param {boolean} isAbove - Whether to elevate the card (true) or reset it (false).
+ */
+
+function elevateCardAboveOverlay(card, isAbove = true) {
+  card.classList.toggle('z-20', isAbove);
+}
+
+/**
+ * Handles card selection via event delegation.
+ * If no card is active, it creates a placeholder to prevent layout shift,
+ * then triggers the opening animations for the selected card and its overlay.
+ */
+
+let placeholder;
+function handleCardTrigger(card) {
+  if (activeCard) return;
+
+  createPlaceholder(card);
   const cardOverlay = overlayMap.get(card);
-  card.classList.add("z-20");
-  cardOverlayToOpen(cardOverlay, true);
-  
-  cardToOpen(card, true);
-   DOM.mainBackdrop.classList.remove("hidden");
+  backdropToVisible(DOM.mainBackdrop, true);
+
+  setTimeout(() => {
+    cardOverlayToOpen(cardOverlay, true);
+    cardToOpen(card, true);
+    elevateCardAboveOverlay(card, true);
+  }, 100);
 
   activeCard = card;
-  
+}
+
+/**
+ * Initializes and returns a Map linking card IDs to their DOM elements.
+ * @param {NodeList|HTMLElement[]} cards - The list of card elements.
+ * @returns {Map<string, HTMLElement>}
+ */
+function initCardMap(cards) {
+  const map = new Map();
+  cards.forEach((card) => map.set(card.id, card));
+  return map;
+}
+
+const cardMap = initCardMap(DOM.cards);
+/**
+ * Handles task list clicks via event delegation.
+ * Triggers the associated card animation based on the 'data-card' attribute.
+ */
+
+DOM.taskList.addEventListener('click', (e) => {
+  const item = e.target.closest('li[data-card]');
+  if (!item) return;
+
+  const card = cardMap.get(item.dataset.card);
+  handleCardTrigger(card);
+ 
 });
 
 /**
@@ -118,20 +185,24 @@ DOM.cardContainer.addEventListener('click', (e) => {
  */
 function handleGlobalKeydown(e) {
   if (e.key !== 'Escape') return;
+   
   const cardOverlay = overlayMap.get(activeCard);
+  cardOverlayToOpen(cardOverlay, false);
+
   cardToOpen(activeCard, false);
-  
+
   if (placeholder) {
     placeholder.remove();
     placeholder = null;
   }
- cardOverlayToOpen(cardOverlay, false);
- 
-    activeCard.classList.remove("z-20");
-    setTimeout(()=>{
-    DOM.mainBackdrop.classList.add("hidden");
-  }, 20);
-   activeCard = null;
+  elevateCardAboveOverlay(activeCard, false);
+  setTimeout(() => {
+    backdropToVisible(DOM.mainBackdrop, false);
+  }, 300);
+
+  activeCard = null;
+
+  handleFirstInteraction(DOM.cardGuide, hasInteracted);
 }
 
 /**

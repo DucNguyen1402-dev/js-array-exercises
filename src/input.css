@@ -9,15 +9,31 @@
 }
 
 @layer components {
-  .custom-list-item {
+  .counter-item--gradient {
     @apply relative px-9 font-medium;
     counter-increment: item;
   }
 
-  .custom-list-item::before {
+  .counter-item--gradient::before {
     @apply absolute left-0 flex h-6 w-6 items-center justify-center rounded-sm text-white;
     background: linear-gradient(to bottom right, #3b82f6, #06b6d4);
     content: counter(item);
+    transition: transform 1s ease;
+  }
+  .counter-item--gradient:hover::before {
+    transform: scale(110%);
+  }
+
+  .counter-item--badge {
+    @apply relative pl-7;
+    counter-increment: item;
+  }
+
+  .counter-item--badge::before {
+    content: counter(item);
+    @apply absolute left-0  w-5 h-5 text-sm top-0.75
+           flex items-center justify-center
+           rounded-full bg-purple-600 text-white font-bold;
   }
 }
 

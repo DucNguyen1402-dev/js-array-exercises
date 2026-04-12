@@ -5,7 +5,12 @@ import { $ } from "../dom-query.js";
  */
 export function getPositiveSummaryDOM() {
   return {
-    sumBtn: $(".sum-btn"),
+    countPositiveBtn: $(".positive-count__btn"),
+    listContainer: $(".positive-count__list"),
+    positiveNumbers: $(".positive-count__items"),
+    resultContainer: $(".positive-count__result"),
+    totalDisplay: $(".positive-count__totalValue"),
+    loadingIcon: $(".loading-icon")
   };
 }
 

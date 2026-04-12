@@ -5,9 +5,10 @@ export function getAnimationUIDOM() {
     dogEl: $('.dog__animation'),
     ropeEl: $('.rope'),
     cards: $all('.card'),
-    cardContainer: $('.card-container'),
     loadingAnimation: $('.loading-icon__animation'),
-    mainBackdrop: $(".main-backdrop ")
+    mainBackdrop: $(".main-backdrop "),
+    taskList: $(".task-list"),
+    cardGuide: $(".card-guide")
   };
 }
 
