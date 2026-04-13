@@ -10,7 +10,7 @@ export function getPositiveSummaryDOM() {
     positiveDisplayEl: $(".positive-count__items"),
     resultContainer: $(".positive-count__result"),
     totalDisplay: $(".positive-count__totalValue"),
-    loadingIcon: $(".card--positive-count").querySelector(".loading-icon"),
+    processingIcon: $(".card--positive-count").querySelector(".processing-icon"),
     resetBtn: $(".card--positive-count").querySelector(".reset-btn")
   };
 }

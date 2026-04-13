@@ -15,7 +15,7 @@ const UIElement = {
     positiveDisplayEl: DOM.positiveDisplayEl,
     resultContainer: DOM.resultContainer,
     totalDisplay: DOM.totalDisplay,
-    loadingIcon: DOM.loadingIcon
+    processingIcon: DOM.processingIcon
 }
 
 /**

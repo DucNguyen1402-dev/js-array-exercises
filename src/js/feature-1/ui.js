@@ -1,10 +1,10 @@
-import {setLoadingIconHidden} from "../loading-icon.js"
+import {setProcessingIconHidden} from "../processing-icon-ui.js"
 
 
 /**
  * @constant {number} -The duration (in milliseconds) for simulated loading states.
  */
-const LOADING_DURATION = 3100;
+const LOADING_DURATION = 1200;
 
 
 
@@ -46,14 +46,14 @@ function renderListPositiveNumber(positiveNumbers, positiveList) {
  * @param {number} sumResult - The calculated sum of positive numbers.
  */
 export function handleRenderPositiveSumResult(
-  { loadingIcon, listDisplay, positiveNumbers, summaryArea, valueDisplay },
+  { processingIcon, listDisplay, positiveNumbers, summaryArea, valueDisplay },
   positiveList,
   sumResult,
 ) {
-  setLoadingIconHidden(loadingIcon, false);
+  setProcessingIconHidden(processingIcon, false);
 
   setTimeout(() => {
-    setLoadingIconHidden(loadingIcon, true);
+    setProcessingIconHidden(processingIcon, true);
     setListDisplayHidden(listDisplay, false);
     renderListPositiveNumber(positiveNumbers, positiveList);
     setSummaryAreaHidden(summaryArea, false);

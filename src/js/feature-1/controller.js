@@ -18,7 +18,7 @@ const positiveSumUI = {
   valueDisplay: DOM.valueDisplay,
   listDisplay: DOM.listDisplay,
   positiveNumbers: DOM.positiveNumbers,
-  loadingIcon: DOM.loadingIcon,
+  processingIcon: DOM.processingIcon,
   summaryArea: DOM.summaryArea,
 };
 

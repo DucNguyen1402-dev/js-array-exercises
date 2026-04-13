@@ -5,5 +5,5 @@ import {saveNumbersState} from "../state.js";
  */
 export function appendNumber(value, numbersState) {
   numbersState.push(Number(value));
-  saveNumbersState();
+  saveNumbersState(numbersState);
 }

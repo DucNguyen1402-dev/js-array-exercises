@@ -1,4 +1,4 @@
-import { setLoadingIconHidden } from '../loading-icon.js';
+import { setProcessingIconHidden } from '../processing-icon-ui.js';
 
 /**
  * =================================
@@ -9,7 +9,7 @@ import { setLoadingIconHidden } from '../loading-icon.js';
 /**
  * @constant {number} -The duration (in milliseconds) for simulated loading states.
  */
-const LOADING_DURATION = 3100;
+const LOADING_DURATION = 1200;
 
 /**
  * =======================================
@@ -90,9 +90,9 @@ export function resetPositiveCountUI(UIElement) {
     positiveDisplayEl,
     resultContainer,
     totalDisplay,
-    loadingIcon,
+    processingIcon,
   } = UIElement;
-  setLoadingIconHidden(loadingIcon, true);
+  setProcessingIconHidden(processingIcon, true);
   setListContainerToHidden(listContainer, true);
   positiveDisplayEl.textContent = '';
   setResultContainerToHidden(resultContainer, true);
@@ -123,12 +123,12 @@ export function updatePositiveNumbersCountUI(
     positiveDisplayEl,
     resultContainer,
     totalDisplay,
-    loadingIcon,
+    processingIcon,
   } = UIElement;
   resetPositiveCountUI(UIElement);
-  setLoadingIconHidden(loadingIcon, false);
+  setProcessingIconHidden(processingIcon, false);
   setTimeout(() => {
-    setLoadingIconHidden(loadingIcon, true);
+    setProcessingIconHidden(processingIcon, true);
     handlePositiveList(listContainer, positiveDisplayEl, positiveList);
     handlePositiveCount(positiveCount, resultContainer, totalDisplay);
   }, LOADING_DURATION);

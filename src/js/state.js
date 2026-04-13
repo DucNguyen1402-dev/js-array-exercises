@@ -9,5 +9,9 @@ export function saveNumbersState(state) {
 
 export function loadNumbersState() {
   const data = localStorage.getItem("numbersState");
-  return data ? JSON.parse(data) : [];
+  return data && data !== "undefined" ? JSON.parse(data) : [];
 }
+
+export const listeners = {
+   onUpdate: null
+};

@@ -4,10 +4,9 @@ import {
   handleInputErrorUISubmission,
   resetInputErrorUISubmission,
   resetInput,
-} from "./ui.js";
+} from "./validation-ui.js";
 import { appendNumber } from "./number-input-action.js";
-import { renderArray } from "./display.js";
-import {numbersState, loadNumbersState} from "../state.js";
+import {numbersState, listeners} from "../state.js";
 
 
 /**
@@ -80,7 +79,7 @@ function syncInputErrorUI(input, errorArea, state) {
  * Handles the logic for adding a number from the UI to the state.
  */
 function handleAddNumberClick() {
-  const { input, errorArea, display } = INPUT_UI;
+  const { input, errorArea } = INPUT_UI;
    
   const value = input.value.trim();
   const state = getNumberValidationState(value);
@@ -89,8 +88,10 @@ function handleAddNumberClick() {
 
   appendNumber(value, numbersState);
 
+  if(listeners.onUpdate){
+     listeners.onUpdate();
+  }
   resetInput(input);
-  renderArray(display, numbersState);
 }
 
 /**
@@ -98,24 +99,3 @@ function handleAddNumberClick() {
  */
 DOM.addBtn.addEventListener("click", handleAddNumberClick);
 
-
-/**
- * =========================================
- *  4. INIT: LOAD FROM STORAGE + RENDER UI
- * =====================================
- */
-
-/**
- * Retrieves the saved array from storage and renders it to the UI on initial load.
- * Prevents execution if no data is found in storage.
- */
-
-function renderArrayFromStorage(){
-  const { display } = INPUT_UI;
-  const savedArray = loadNumbersState();
-  if(!savedArray) return;
-   renderArray(display, savedArray);
-}
-
-// Automatically sync the UI with stored data on script execution
-renderArrayFromStorage();

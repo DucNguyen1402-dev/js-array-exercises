@@ -9,7 +9,7 @@ export function getPositiveSummaryDOM() {
     valueDisplay: $(".positive-sum__value"),
     listDisplay: $(".positive-sum__list"),
     positiveNumbers: $(".positive-sum__numbers"),
-    loadingIcon: $(".card--positive-sum ").querySelector(".loading-icon"),
+    processingIcon: $(".card--positive-sum ").querySelector(".processing-icon"),
     summaryArea: $(".positive-sum__area"),
     resetBtn: $(".card--positive-sum ").querySelector(".reset-btn")
   };

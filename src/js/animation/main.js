@@ -96,6 +96,26 @@ function cardToOpen(card, state = true) {
 function backdropToVisible(backdrop, state = true) {
   backdrop.classList.toggle('hidden', !state);
 }
+
+/**
+ * Backdrop bg states: default (normal), closing (lighter before fade-out)
+ */
+const BACKDROP_BG = {
+  default: "bg-slate-950/60",
+  closing: "bg-slate-900/20",
+};
+
+/**
+ * @param {HTMLElement} backdrop - backdrop element
+ * @param {boolean} [isClosing=true] - apply lighter bg for closing phase
+ */
+function setBackdropClosingState(backdrop, isClosing = true) {
+  backdrop.classList.remove(BACKDROP_BG.default, BACKDROP_BG.closing);
+
+  backdrop.classList.add(
+    isClosing ? BACKDROP_BG.closing : BACKDROP_BG.default
+  );
+}
 /**
  * Maps each card element to its corresponding overlay element for quick lookup.
  * @type {Map<HTMLElement, HTMLElement>}
@@ -197,8 +217,11 @@ function handleGlobalKeydown(e) {
     placeholder = null;
   }
   elevateCardAboveOverlay(activeCard, false);
+ 
+  setBackdropClosingState(DOM.mainBackdrop, true);
   setTimeout(() => {
     backdropToVisible(DOM.mainBackdrop, false);
+    setBackdropClosingState(DOM.mainBackdrop, false);
   }, 300);
 
   activeCard = null;
@@ -210,3 +233,11 @@ function handleGlobalKeydown(e) {
  * Listens for global keydown events to handle keyboard interactions.
  */
 document.addEventListener('keydown', handleGlobalKeydown);
+
+/**
+ * Triggers the dog character animation once the window has fully loaded.
+ * Adds a specific animation class to move the element to a hidden state after a delay.
+ */
+window.addEventListener("load", () => {
+  DOM.dogAnimation.classList.add("animate-[dogMoveToHidden_1s_linear_2s_forwards]");
+});
