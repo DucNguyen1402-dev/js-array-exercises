@@ -9,6 +9,7 @@
 }
 
 @layer components {
+  /* counter item v1 */
   .counter-item--gradient {
     @apply relative px-9 font-medium;
     counter-increment: item;
@@ -24,6 +25,7 @@
     transform: scale(110%);
   }
 
+  /* counter item v2 */
   .counter-item--badge {
     @apply relative pl-7;
     counter-increment: item;

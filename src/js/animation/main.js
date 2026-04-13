@@ -190,6 +190,7 @@ function handleGlobalKeydown(e) {
   cardOverlayToOpen(cardOverlay, false);
 
   cardToOpen(activeCard, false);
+  activeCard.querySelector(".reset-btn").click();
 
   if (placeholder) {
     placeholder.remove();

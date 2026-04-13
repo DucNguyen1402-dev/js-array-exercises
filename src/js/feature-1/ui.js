@@ -1,15 +1,12 @@
+import {setLoadingIconHidden} from "../loading-icon.js"
+
+
 /**
  * @constant {number} -The duration (in milliseconds) for simulated loading states.
  */
 const LOADING_DURATION = 3100;
 
-/**
- * @param {HTMLElement} loadingIcon
- * @param {boolean} [isVisible=true] - Whether to show the loading icon.
- */
-function setLoadingIconVisible(loadingIcon, state = true) {
-  loadingIcon.classList.toggle("hidden", state);
-}
+
 
 /**
  * @param {HTMLElement} valueDisplay
@@ -48,15 +45,15 @@ function renderListPositiveNumber(positiveNumbers, positiveList) {
  * @param {number[]} positiveList - Array of positive numbers to display.
  * @param {number} sumResult - The calculated sum of positive numbers.
  */
-export function handleRenderResult(
+export function handleRenderPositiveSumResult(
   { loadingIcon, listDisplay, positiveNumbers, summaryArea, valueDisplay },
   positiveList,
   sumResult,
 ) {
-  setLoadingIconVisible(loadingIcon, false);
+  setLoadingIconHidden(loadingIcon, false);
 
   setTimeout(() => {
-    setLoadingIconVisible(loadingIcon, true);
+    setLoadingIconHidden(loadingIcon, true);
     setListDisplayHidden(listDisplay, false);
     renderListPositiveNumber(positiveNumbers, positiveList);
     setSummaryAreaHidden(summaryArea, false);

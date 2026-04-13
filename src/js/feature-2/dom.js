@@ -7,10 +7,11 @@ export function getPositiveSummaryDOM() {
   return {
     countPositiveBtn: $(".positive-count__btn"),
     listContainer: $(".positive-count__list"),
-    positiveNumbers: $(".positive-count__items"),
+    positiveDisplayEl: $(".positive-count__items"),
     resultContainer: $(".positive-count__result"),
     totalDisplay: $(".positive-count__totalValue"),
-    loadingIcon: $(".loading-icon")
+    loadingIcon: $(".card--positive-count").querySelector(".loading-icon"),
+    resetBtn: $(".card--positive-count").querySelector(".reset-btn")
   };
 }
 

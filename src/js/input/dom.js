@@ -8,6 +8,7 @@ export const getNumberDOM = () => ({
   addBtn: $(".add__btn"),
   display: $(".array__display"),
   errorArea: $(".error__area"),
+
 });
 
 /** *

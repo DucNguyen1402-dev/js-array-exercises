@@ -1,6 +1,6 @@
 import { DOM } from "./dom.js";
 import { numbersState } from "../state.js";
-import {resetUI, handleRenderResult} from "./ui.js";
+import {resetUI, handleRenderPositiveSumResult} from "./ui.js";
 import {calculatePositiveSum} from "./calculate.js";
 import {getPositiveNumbers} from "./numbers-utils.js";
 /**
@@ -41,14 +41,24 @@ const handleSumPositive = () => {
 
   const positiveList = getPositiveNumbers(numbersState);
 
-  handleRenderResult(positiveSumUI, positiveList, sumResult);
+  handleRenderPositiveSumResult(positiveSumUI, positiveList, sumResult);
 };
 
 
 /**
  * ====================================
- *      3. SUM BUTTON EVENT SETUP
+ *      3. EVENT LISTENERS SETUP
  * ===================================
  */
 
+/**
+ * Event listener to trigger the calculation and display of the positive numbers' sum.
+ */
+
 DOM.sumBtn.addEventListener("click", handleSumPositive);
+/**
+ * Event listener to reset the sum display UI when the reset button is clicked.
+ */
+DOM.resetBtn.addEventListener("click", ()=>{
+     resetUI(positiveSumUI);
+});

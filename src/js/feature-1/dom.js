@@ -9,8 +9,9 @@ export function getPositiveSummaryDOM() {
     valueDisplay: $(".positive-sum__value"),
     listDisplay: $(".positive-sum__list"),
     positiveNumbers: $(".positive-sum__numbers"),
-    loadingIcon: $(".loading-icon"),
-    summaryArea: $(".positive-sum__area")
+    loadingIcon: $(".card--positive-sum ").querySelector(".loading-icon"),
+    summaryArea: $(".positive-sum__area"),
+    resetBtn: $(".card--positive-sum ").querySelector(".reset-btn")
   };
 }
 
