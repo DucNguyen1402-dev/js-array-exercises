@@ -11,7 +11,8 @@ export function getPositiveSummaryDOM() {
     positiveNumbers: $(".positive-sum__numbers"),
     processingIcon: $(".card--positive-sum ").querySelector(".processing-icon"),
     summaryArea: $(".positive-sum__area"),
-    resetBtn: $(".card--positive-sum ").querySelector(".reset-btn")
+    resetBtn: $(".card--positive-sum ").querySelector(".reset-btn"),
+    emptyWarning: $('[data-role="sum-positive-empty-warning"]')
   };
 }
 

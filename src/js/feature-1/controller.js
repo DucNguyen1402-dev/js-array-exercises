@@ -1,6 +1,6 @@
 import { DOM } from "./dom.js";
-import { numbersState } from "../state.js";
-import {resetUI, handleRenderPositiveSumResult} from "./ui.js";
+import { numbersState , isArrayEmpty } from "../state.js";
+import {resetUI, handleRenderPositiveSumResult, handleArrayEmptyWarning} from "./ui.js";
 import {calculatePositiveSum} from "./calculate.js";
 import {getPositiveNumbers} from "./numbers-utils.js";
 /**
@@ -20,6 +20,7 @@ const positiveSumUI = {
   positiveNumbers: DOM.positiveNumbers,
   processingIcon: DOM.processingIcon,
   summaryArea: DOM.summaryArea,
+  emptyWarning: DOM.emptyWarning
 };
 
 
@@ -35,10 +36,13 @@ const positiveSumUI = {
  */
 
 const handleSumPositive = () => {
-  resetUI(positiveSumUI);
+
+  if(isArrayEmpty(numbersState)){
+    handleArrayEmptyWarning(positiveSumUI);
+    return;
+  }
 
   const sumResult = calculatePositiveSum(numbersState);
-
   const positiveList = getPositiveNumbers(numbersState);
 
   handleRenderPositiveSumResult(positiveSumUI, positiveList, sumResult);

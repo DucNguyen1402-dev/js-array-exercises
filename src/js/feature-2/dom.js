@@ -11,7 +11,8 @@ export function getPositiveSummaryDOM() {
     resultContainer: $(".positive-count__result"),
     totalDisplay: $(".positive-count__totalValue"),
     processingIcon: $(".card--positive-count").querySelector(".processing-icon"),
-    resetBtn: $(".card--positive-count").querySelector(".reset-btn")
+    resetBtn: $(".card--positive-count").querySelector(".reset-btn"),
+    emptyWarning: $('[data-role="count-positive-empty-warning"]')
   };
 }
 

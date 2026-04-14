@@ -1,15 +1,14 @@
 import { DOM } from './dom.js';
 import { numbersState, listeners, loadNumbersState } from '../state.js';
-import {resetArrayContent} from "./reset.js";
-
+import { resetArrayContent } from './reset.js';
 
 /**
- * Renders the provided array (or the current state) as a comma-separated string 
+ * Renders the provided array (or the current state) as a comma-separated string
  * into the designated display element.
  * @param {number[]} [array=numbersState] - The array to be rendered.
  */
 function renderArray(array = numbersState) {
-  DOM.display.textContent = array.join(', ');
+  DOM.displayItems.textContent = array.join(', ');
 }
 
 /**
@@ -54,11 +53,9 @@ renderArrayFromStorage();
  * =================================================
  */
 
-DOM.resetBtn.addEventListener("click", ()=>{
-  resetArrayContent(DOM.display, numbersState)
+DOM.resetBtn.addEventListener('click', () => {
+  resetArrayContent(DOM.displayItems, numbersState);
 });
-
-
 
 /**
  * ===============================================
@@ -66,28 +63,69 @@ DOM.resetBtn.addEventListener("click", ()=>{
  * =================================================
  */
 
+/*============= 4.1 DATA CONFIG ================= */
+const MOUSE_STATE = {
+  enter: {
+    container: ['bg-rose-700', 'text-gray-100'],
+    displayItems: ['text-indigo-100'],
+  },
+  leave: {
+    container: ['bg-slate-100', 'text-gray-600'],
+    displayItems: ['text-indigo-500'],
+  },
+};
+
+const getAllClasses = (key) =>
+  Object.values(MOUSE_STATE).flatMap((state) => state[key]);
+
+const ALL_CLASSES = {
+  container: getAllClasses('container'),
+  displayItems: getAllClasses('displayItems'),
+};
+
+
+
+/*============= 4.1 EVENT SETUP ================= */
+
 /**
  * Warn user on reset hover:
  * toggle container warning state (add/remove bg-red).
  */
 
-const container = document.querySelector(".array-display");
-const resetBtn = document.querySelector(".array-display__reset");
-const valueDisplay = container.querySelector(".array-display__value");
+function updateClasses(el, removeClasses, addClasses) {
+  el.classList.remove(...removeClasses);
+  el.classList.add(...addClasses);
+}
 
-resetBtn.addEventListener("mouseenter", () => {
-  if(numbersState.length === 0) return;
-  container.classList.replace("bg-slate-100", "bg-rose-500");
-  container.classList.replace("text-gray-600", "text-gray-100");
-  valueDisplay.classList.replace("text-indigo-500", "text-indigo-100");
-  
+DOM.resetBtn.addEventListener('mouseenter', () => {
+  if (numbersState.length === 0) return;
+  const { arrayContainer, displayItems } = DOM;
+
+  updateClasses(
+    arrayContainer,
+    ALL_CLASSES.container,
+    MOUSE_STATE.enter.container
+  );
+
+  updateClasses(
+    displayItems,
+    ALL_CLASSES.displayItems,
+    MOUSE_STATE.enter.displayItems
+  );
 });
 
-resetBtn.addEventListener("mouseleave", () => {
+DOM.resetBtn.addEventListener('mouseleave', () => {
+  const { arrayContainer, displayItems } = DOM;
 
-  container.classList.replace("bg-rose-500", "bg-slate-100");
-  container.classList.replace("text-gray-100", "text-gray-600");
-   valueDisplay.classList.replace("text-indigo-100", "text-indigo-500");
+  updateClasses(
+    arrayContainer,
+    ALL_CLASSES.container,
+    MOUSE_STATE.leave.container
+  );
+
+  updateClasses(
+    displayItems,
+    ALL_CLASSES.displayItems,
+    MOUSE_STATE.leave.displayItems
+  );
 });
-
-

@@ -78,7 +78,22 @@ function handlePositiveCount(positiveCount, resultContainer, totalDisplay) {
   showTotalCount(positiveCount, totalDisplay);
 }
 
-/*============2.3 RESET UI =============*/
+/*============2.3 EMPTY WARNING =============*/
+/**
+ * Toggles the visibility of the empty state warning element.
+ * @param {HTMLElement} emptyWarning - The warning element to show or hide.
+ * @param {boolean} [toHidden=true] - Whether to hide (true) or show (false) the warning.
+ */
+function setEmptyWarningToHidden(emptyWarning, toHidden = true){
+  emptyWarning.classList.toggle("hidden", toHidden);
+}
+
+/**
+ * =======================================
+ *       3.  RESET UI FUNCTION
+ * ======================================
+ */
+
 /**
  * Resets the positive count interface to its initial state.
  * Hides all related containers and icons, then clears or resets text content.
@@ -91,9 +106,12 @@ export function resetPositiveCountUI(UIElement) {
     resultContainer,
     totalDisplay,
     processingIcon,
+    emptyWarning
   } = UIElement;
   setProcessingIconHidden(processingIcon, true);
   setListContainerToHidden(listContainer, true);
+  setEmptyWarningToHidden(emptyWarning, true);
+
   positiveDisplayEl.textContent = '';
   setResultContainerToHidden(resultContainer, true);
   totalDisplay.textContent = '0';
@@ -101,9 +119,22 @@ export function resetPositiveCountUI(UIElement) {
 
 /**
  * =======================================
- *      3.  ORCHESTRATION FUNCTION
+ *      4.  ORCHESTRATION FUNCTION
  * ======================================
  */
+
+/*============1. EDGE CASE FLOW (EMPTY) =============*/
+/**
+ * Handles the UI state when the array is empty for the positive count feature.
+ * Resets the count display and ensures the empty warning is hidden/reset before any new action.
+ * @param {Object} countPositiveUI - The collection of UI elements for the positive count feature.
+ */
+export function handleArrayEmptyWarning(countPositiveUI){
+  resetPositiveCountUI(countPositiveUI);
+  setEmptyWarningToHidden(countPositiveUI.emptyWarning, false);
+}
+
+/*============2. MAIN FLOW  =============*/
 
 /**
  * Main function to orchestrate the UI update for positive number counting.
@@ -133,3 +164,5 @@ export function updatePositiveNumbersCountUI(
     handlePositiveCount(positiveCount, resultContainer, totalDisplay);
   }, LOADING_DURATION);
 }
+
+

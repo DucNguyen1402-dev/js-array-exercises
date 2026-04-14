@@ -6,7 +6,7 @@ import { $ } from "../dom-query.js";
 export const getNumberDOM = () => ({
   numberInput: $(".number__input"),
   addBtn: $(".add__btn"),
-  display: $(".array-display__value"),
+  display: $(".array-display__items"),
   errorArea: $(".error__area"),
 
 });

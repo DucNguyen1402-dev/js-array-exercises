@@ -4,8 +4,10 @@ import { $ } from "../dom-query.js";
  * @type {Object.<string, HTMLElement>} Factory function to select and return DOM elements.
  */
 export const getNumberDOM = () => ({
-  display: $(".array-display__value"),
-  resetBtn: $(".array-display__reset")
+  arrayContainer: $(".array-display"),
+  displayItems: $(".array-display__items"),
+  resetBtn: $(".array-display__reset"),
+
 });
 
 /** *

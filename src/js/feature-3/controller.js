@@ -1,5 +1,5 @@
 import { DOM } from './dom.js';
-import { numbersState } from '../state.js';
+import { numbersState , isArrayEmpty} from '../state.js';
 import { findMinNumber } from './core-action.js';
 import { handleEmptyWarning, handleMinResultUI, resetFindMinUI } from './ui.js';
 
@@ -19,9 +19,6 @@ const findMinUI = {
  * @param {number[]} numbersState - The array to validate.
  * @returns {boolean} True if empty, false otherwise.
  */
-function isArrayEmpty(numbersState) {
-  return numbersState.length === 0 ? true : false;
-}
 
 /**
  * Main handler for the "Find Minimum" action.
@@ -29,7 +26,7 @@ function isArrayEmpty(numbersState) {
  */
 function handleFindMinNumber() {
   if (isArrayEmpty(numbersState)) {
-    return handleEmptyWarning(findMinUI.emptyWarning);
+    return handleEmptyWarning(findMinUI);
   }
 
   handleMinResultUI(findMinNumber(numbersState), findMinUI);

@@ -1,7 +1,7 @@
 import {DOM} from "./dom.js";
-import {numbersState} from "../state.js";
+import {numbersState, isArrayEmpty} from "../state.js";
 import {getPossitiveCount, getPositiveNumberList} from "./core-action.js";
-import {updatePositiveNumbersCountUI, resetPositiveCountUI} from "./ui.js";
+import {updatePositiveNumbersCountUI, resetPositiveCountUI, handleArrayEmptyWarning} from "./ui.js";
 /**
  * ====================================
  *  1. UI REFERENCES (VIEW LAYER)
@@ -10,12 +10,13 @@ import {updatePositiveNumbersCountUI, resetPositiveCountUI} from "./ui.js";
 /**
  * @type {Object.<string, HTMLElement>} - UI components for positive count and display.
  */
-const UIElement = {
+const countPositiveUI = {
     listContainer: DOM.listContainer,
     positiveDisplayEl: DOM.positiveDisplayEl,
     resultContainer: DOM.resultContainer,
     totalDisplay: DOM.totalDisplay,
-    processingIcon: DOM.processingIcon
+    processingIcon: DOM.processingIcon,
+    emptyWarning: DOM.emptyWarning
 }
 
 /**
@@ -30,10 +31,17 @@ const UIElement = {
  * and updating the corresponding UI elements.
  */
 
+
+
+
 function countPositiveNumbers(){
+    if(isArrayEmpty(numbersState)){
+        handleArrayEmptyWarning(countPositiveUI);
+        return;
+    }
     const positiveNumbersList = getPositiveNumberList(numbersState);
     const positiveCount = getPossitiveCount(positiveNumbersList);
-    updatePositiveNumbersCountUI(positiveNumbersList, positiveCount, UIElement);
+    updatePositiveNumbersCountUI(positiveNumbersList, positiveCount, countPositiveUI);
 }
 
 
@@ -50,5 +58,5 @@ DOM.countPositiveBtn.addEventListener("click", countPositiveNumbers);
 
 
 DOM.resetBtn.addEventListener("click",()=>{
-    resetPositiveCountUI(UIElement);
+    resetPositiveCountUI(countPositiveUI);
 } );
