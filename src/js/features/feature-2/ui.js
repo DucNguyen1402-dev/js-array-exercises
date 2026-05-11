@@ -1,4 +1,4 @@
-import { setProcessingIconHidden } from '../processing-icon-ui.js';
+import {setProcessingIconHidden} from "../shared/ui/processing-icon-ui.js"
 
 /**
  * =================================
@@ -9,7 +9,7 @@ import { setProcessingIconHidden } from '../processing-icon-ui.js';
 /**
  * @constant {number} -The duration (in milliseconds) for simulated loading states.
  */
-const LOADING_DURATION = 1200;
+const LOADING_DURATION = 900;
 
 /**
  * =======================================

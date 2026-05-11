@@ -1,6 +1,6 @@
 import { DOM } from './dom.js';
-import { numbersState , isArrayEmpty} from '../state.js';
-import { findMinNumber } from './core-action.js';
+import { numbersState, isArrayEmpty } from './dom.js';
+import { findMinNumber } from './task-domain.js';
 import { handleEmptyWarning, handleMinResultUI, resetFindMinUI } from './ui.js';
 
 /**
@@ -24,22 +24,25 @@ const findMinUI = {
  * Main handler for the "Find Minimum" action.
  * Validates the state and coordinates between showing a warning or displaying the result.
  */
-function handleFindMinNumber() {
+function handleFindMinNumber(globalDispatch) {
   if (isArrayEmpty(numbersState)) {
     return handleEmptyWarning(findMinUI);
   }
-
-  handleMinResultUI(findMinNumber(numbersState), findMinUI);
+  handleMinResultUI(globalDispatch,findMinNumber(numbersState), findMinUI);
 }
 
-/**
- * Event listener to trigger the logic for finding the minimum number in the array.
- */
-DOM.findMinBtn.addEventListener('click', handleFindMinNumber);
+export function initFindMinEvents(globalDispatch) {
+  /**
+   * Event listener to trigger the logic for finding the minimum number in the array.
+   */
+  DOM.findMinBtn.addEventListener('click', ()=>{
+    handleFindMinNumber(globalDispatch);
+  });
 
-/**
- * Event listener to clear the minimum number result and reset the feature's UI state.
- */
-DOM.resetBtn.addEventListener('click', () => {
-  resetFindMinUI(findMinUI);
-});
+  /**
+   * Event listener to clear the minimum number result and reset the feature's UI state.
+   */
+  DOM.resetBtn.addEventListener('click', () => {
+    resetFindMinUI(findMinUI);
+  });
+}

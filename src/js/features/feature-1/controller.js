@@ -1,14 +1,17 @@
-import { DOM } from "./dom.js";
-import { numbersState , isArrayEmpty } from "../state.js";
-import {resetUI, handleRenderPositiveSumResult, handleArrayEmptyWarning} from "./ui.js";
-import {calculatePositiveSum} from "./calculate.js";
-import {getPositiveNumbers} from "./numbers-utils.js";
+import { DOM } from './dom.js';
+import { numbersState, isArrayEmpty } from './dom.js';
+import {
+  resetUI,
+  handleRenderPositiveSumResult,
+  handleArrayEmptyWarning,
+} from './ui.js';
+import { calculatePositiveSum } from './task-domain.js';
+import { getPositiveNumbers } from './numbers-utils.js';
 /**
  * ====================================
  *  1. UI REFERENCES (VIEW LAYER)
  * ====================================
  */
-
 
 /**
  * @type {Object.<string, HTMLElement>} - UI components for positive sum calculation and display.
@@ -20,10 +23,8 @@ const positiveSumUI = {
   positiveNumbers: DOM.positiveNumbers,
   processingIcon: DOM.processingIcon,
   summaryArea: DOM.summaryArea,
-  emptyWarning: DOM.emptyWarning
+  emptyWarning: DOM.emptyWarning,
 };
-
-
 
 /**
  * ====================================
@@ -36,8 +37,7 @@ const positiveSumUI = {
  */
 
 const handleSumPositive = () => {
-
-  if(isArrayEmpty(numbersState)){
+  if (isArrayEmpty(numbersState)) {
     handleArrayEmptyWarning(positiveSumUI);
     return;
   }
@@ -48,21 +48,22 @@ const handleSumPositive = () => {
   handleRenderPositiveSumResult(positiveSumUI, positiveList, sumResult);
 };
 
-
 /**
  * ====================================
  *      3. EVENT LISTENERS SETUP
  * ===================================
  */
 
-/**
- * Event listener to trigger the calculation and display of the positive numbers' sum.
- */
+export function initPositiveSumEvents() {
+  /**
+   * Event listener to trigger the calculation and display of the positive numbers' sum.
+   */
 
-DOM.sumBtn.addEventListener("click", handleSumPositive);
-/**
- * Event listener to reset the sum display UI when the reset button is clicked.
- */
-DOM.resetBtn.addEventListener("click", ()=>{
-     resetUI(positiveSumUI);
-});
+  DOM.sumBtn.addEventListener('click', handleSumPositive);
+  /**
+   * Event listener to reset the sum display UI when the reset button is clicked.
+   */
+  DOM.resetBtn.addEventListener('click', () => {
+    resetUI(positiveSumUI);
+  });
+}

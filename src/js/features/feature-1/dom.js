@@ -1,5 +1,5 @@
-import { $ } from "../dom-query.js";
-
+import { $ } from "../index.js";
+export { numbersState, isArrayEmpty } from '../../state.js';
 /**
  * @type {Object.<string, HTMLElement>} Factory function to select and return DOM elements.
  */

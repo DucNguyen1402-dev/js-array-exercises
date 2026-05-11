@@ -1,4 +1,4 @@
-import { setProcessingIconHidden } from '../processing-icon-ui.js';
+import {setProcessingIconHidden} from "../shared/ui/processing-icon-ui.js"
 
 
 /**
@@ -10,7 +10,7 @@ import { setProcessingIconHidden } from '../processing-icon-ui.js';
 /**
  * @constant {number} -The duration (in milliseconds) for simulated loading states.
  */
-const LOADING_DURATION = 1200;
+const LOADING_DURATION = 900;
 
 
 /**
@@ -49,9 +49,9 @@ function resetResultContainterUI(resultContainer, minNumber) {
  * @param {number} min - The minimum value to display.
  * @param {Object} elements - The UI elements container and label.
  */
-function renderMinValue(min, { resultContainer, minNumber }) {
+function renderMinValue(minValue, { resultContainer, minNumber }) {
   resultContainer.classList.remove('hidden');
-  minNumber.textContent = `${min}`;
+  minNumber.textContent = `${minValue}`;
 }
 
 
@@ -79,9 +79,10 @@ function setWarningEmptyToHidden(emptyWarning, toHidden = true) {
  * Clears any active warnings and hides the result container while resetting its content.
  * @param {Object} UI - Object containing the UI elements for the find min feature.
  */
-export function resetFindMinUI({ emptyWarning, resultContainer, minNumber }) {
+export function resetFindMinUI({ emptyWarning, resultContainer, minNumber }, dispatch) {
   setWarningEmptyToHidden(emptyWarning, true);
   resetResultContainterUI(resultContainer, minNumber);
+
 }
 
 
@@ -108,17 +109,20 @@ export function handleEmptyWarning(findMinUI) {
 
 /**
  * Manages the UI flow for finding the minimum number, including a fake loading state.
+ * @param {Function} dispatch - The dispatch function to send actions to the store.
  * @param {number} min - The calculated minimum value.
  * @param {Object} findMinUI - The collection of DOM elements for this feature.
  */
-export function handleMinResultUI(min, findMinUI) {
+export function handleMinResultUI(globalDispatch, minResult, findMinUI) {
   const { processingIcon, resultContainer, minNumber } = findMinUI;
+  const {minValue, index } = minResult;
   resetFindMinUI(findMinUI);
 
   setProcessingIconHidden(processingIcon, false);
   setTimeout(() => {
+     globalDispatch({type: "SHOW_NUMBER_HIGHLIGHT", payload: {id: index}});
     setProcessingIconHidden(processingIcon, true);
-    renderMinValue(min, findMinUI);
+    renderMinValue(minValue, findMinUI);
   }, LOADING_DURATION);
 }
 

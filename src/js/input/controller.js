@@ -20,17 +20,10 @@ import {numbersState, listeners} from "../state.js";
  */
 const DOM = getNumberDOM();
 
-/**
- * =============================
- *      1. DATA CONFIG
- * =============================
- */
-
-
 
 /**
  * ====================================
- *  2. UI REFERENCES (VIEW LAYER)
+ *  1. UI REFERENCES (VIEW LAYER)
  * ====================================
  */
 
@@ -78,7 +71,7 @@ function syncInputErrorUI(input, errorArea, state) {
 /**
  * Handles the logic for adding a number from the UI to the state.
  */
-function handleAddNumberClick() {
+function handleAddNumberClick(globalDispatch) {
   const { input, errorArea } = INPUT_UI;
    
   const value = input.value.trim();
@@ -88,14 +81,20 @@ function handleAddNumberClick() {
 
   appendNumber(value, numbersState);
 
+  globalDispatch({type: "NUMBER_STATE_CHANGE"});
   if(listeners.onUpdate){
      listeners.onUpdate();
   }
   resetInput(input);
 }
 
+
+export function initAddBtnEvent(globalDispatch){
 /**
  * Add button event setup
  */
-DOM.addBtn.addEventListener("click", handleAddNumberClick);
+DOM.addBtn.addEventListener("click", ()=>{
+  handleAddNumberClick(globalDispatch)
+});
 
+}
