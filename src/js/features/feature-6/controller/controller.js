@@ -75,7 +75,7 @@ export function createSwapController({ globalDispatch }) {
     const deps = {
       ...state,
       ...renders,
-      ...swapElements,
+      swapElements,
     };
     useCases.applySwapSelectionState(deps);
   };
