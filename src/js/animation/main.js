@@ -1,20 +1,6 @@
 import { DOM } from './dom.js';
 
 /**
- * =========================================
- *    1. FALLING ROPE ANIMATION
- * ======================================
- */
-
-DOM.dogEl.addEventListener('animationstart', () => {
-  DOM.ropeEl.classList.replace('rotate-10', '-rotate-10');
-  DOM.ropeEl.classList.replace('translate-y-18', 'translate-y-28');
-  setTimeout(() => {
-    DOM.dogEl.classList.add('hidden');
-  }, 3000);
-});
-
-/**
  
  * =========================================
  *        2. CARD OPEN ANIMATION

@@ -74,6 +74,17 @@ input[type='number']::-webkit-inner-spin-button {
   }
 }
 
+@keyframes ropeDrop {
+  from{
+    transform: rotate(5deg) translateY(0)  ;
+  }to{
+    transform: rotate(-15deg) translateY(25px)  ;
+  }
+}
+
+
+
+
 .processing-bar-animation {
   animation: processingBarMove 0.8s ease-out forwards;
 }

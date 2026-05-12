@@ -25,25 +25,24 @@ const findSmallestPosUI = {
  * Handles the click event to find and display the smallest positive number.
  * Validates state before updating the UI.
  */
-function handleFindSmallestPosNumber(globalDispatch) {
+function handleFindSmallestPosNumber() {
   if (isArrayEmpty(numbersState)) {
     return smallestPosUIHandler.handleEmptyWarning(findSmallestPosUI);
   }
   smallestPosUIHandler.handleSmallestPosResultUI(
-    globalDispatch,
     findSmallestPositive(numbersState),
     findSmallestPosUI
   );
 }
 
-export function initFindSmallestPosEvents(globalDispatch) {
+export function initFindSmallestPosEvents() {
   /**
    * Event listener for the calculation button.
    */
   DOM.findSmallestPossitiveBtn.addEventListener(
     'click',
     ()=>{
-      handleFindSmallestPosNumber(globalDispatch)
+      handleFindSmallestPosNumber()
     }
   );
 

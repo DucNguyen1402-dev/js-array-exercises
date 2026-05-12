@@ -18,8 +18,8 @@ function initApp() {
 
   initPositiveSumEvents();
   initPositiveCountEvents();
-  initFindMinEvents(controller.globalDispatch);
-  initFindSmallestPosEvents(controller.globalDispatch);
+  initFindMinEvents();
+  initFindSmallestPosEvents();
   initFindLastEvenNumberEvents(controller.globalDispatch);
   initResetHoverEvents(controller.globalDispatch);
   initAddBtnEvent(controller.globalDispatch);

@@ -113,14 +113,13 @@ export function handleEmptyWarning(findMinUI) {
  * @param {number} min - The calculated minimum value.
  * @param {Object} findMinUI - The collection of DOM elements for this feature.
  */
-export function handleMinResultUI(globalDispatch, minResult, findMinUI) {
+export function handleMinResultUI( minResult, findMinUI) {
   const { processingIcon, resultContainer, minNumber } = findMinUI;
   const {minValue, index } = minResult;
   resetFindMinUI(findMinUI);
 
   setProcessingIconHidden(processingIcon, false);
   setTimeout(() => {
-     globalDispatch({type: "SHOW_NUMBER_HIGHLIGHT", payload: {id: index}});
     setProcessingIconHidden(processingIcon, true);
     renderMinValue(minValue, findMinUI);
   }, LOADING_DURATION);

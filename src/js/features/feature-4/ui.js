@@ -129,12 +129,11 @@ function handleEmptyWarning(findSmallestPosUI) {
  * @param {number} smallestPos - The calculated smallest positive value.
  * @param {Object} findSmallestPosUI - The UI elements object.
  */
-function handleSmallestPosResultUI(globalDispatch, {smallestPosNumber, index}, findSmallestPosUI) {
+function handleSmallestPosResultUI({smallestPosNumber, index}, findSmallestPosUI) {
   const { processingIcon } = findSmallestPosUI;
   resetFindSmallestPosUI(findSmallestPosUI);
   setProcessingIconHidden(processingIcon, false);
   setTimeout(() => {
-    globalDispatch({type: "SHOW_NUMBER_HIGHLIGHT", payload:{id: index}});
     setProcessingIconHidden(processingIcon, true);
     renderSmallestPos(smallestPosNumber, findSmallestPosUI);
   }, LOADING_DURATION);

@@ -24,19 +24,19 @@ const findMinUI = {
  * Main handler for the "Find Minimum" action.
  * Validates the state and coordinates between showing a warning or displaying the result.
  */
-function handleFindMinNumber(globalDispatch) {
+function handleFindMinNumber() {
   if (isArrayEmpty(numbersState)) {
     return handleEmptyWarning(findMinUI);
   }
-  handleMinResultUI(globalDispatch,findMinNumber(numbersState), findMinUI);
+  handleMinResultUI(findMinNumber(numbersState), findMinUI);
 }
 
-export function initFindMinEvents(globalDispatch) {
+export function initFindMinEvents() {
   /**
    * Event listener to trigger the logic for finding the minimum number in the array.
    */
   DOM.findMinBtn.addEventListener('click', ()=>{
-    handleFindMinNumber(globalDispatch);
+    handleFindMinNumber();
   });
 
   /**
