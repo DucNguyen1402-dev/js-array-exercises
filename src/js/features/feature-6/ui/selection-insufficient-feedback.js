@@ -1,4 +1,4 @@
-import { invariantRequired } from '../utils/index.js';
+import { invariantRequired } from '../index.js';
 
 /**
  * CSS classes used to animate the insufficient selection warning.

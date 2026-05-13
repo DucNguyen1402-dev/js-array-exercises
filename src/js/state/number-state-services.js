@@ -1,9 +1,4 @@
 /**
- * @type {number[]} - Global state storing user-inputted numbers
- */
-export let numbersState = [];
-
-/**
  * Persists the current numbers state to the browser's localStorage.
  * @param {number[]} state - The array of numbers to save.
  */
@@ -22,12 +17,6 @@ export function loadNumbersState() {
   return data && data !== "undefined" ? JSON.parse(data) : [];
 }
 
-/**
- * Object holding callback functions to be triggered when the state changes.
- */
-export const listeners = {
-   onUpdate: null
-};
 
 /**
  * Utility to verify if the numbers array is empty.
@@ -36,4 +25,9 @@ export const listeners = {
  */
 export function isArrayEmpty(numbersState) {
   return numbersState.length === 0 ? true : false;
+}
+
+export function replaceNumbersState(numbersState, newArray) {
+  numbersState.length = 0;
+  numbersState.push(...newArray);
 }

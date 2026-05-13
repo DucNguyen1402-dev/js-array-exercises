@@ -58,7 +58,7 @@ input[type='number']::-webkit-inner-spin-button {
     transform: rotate(0);
   }
   50% {
-    transform: rotate(1deg);
+    transform: rotate(3deg);
   }
   100% {
     transform: rotate(0);
@@ -76,7 +76,7 @@ input[type='number']::-webkit-inner-spin-button {
 
 @keyframes ropeDrop {
   from{
-    transform: rotate(5deg) translateY(0)  ;
+    transform: rotate(6deg) translateY(0)  ;
   }to{
     transform: rotate(-15deg) translateY(25px)  ;
   }
@@ -139,6 +139,10 @@ input[type='number']::-webkit-inner-spin-button {
   left: 50%;
   z-index: 50 !important;
   transform: translate(-50%, -50%);
+}
+
+.card-guide-hidden {
+  transform: translateY(150%);
 }
 
 .number-blink {

@@ -6,7 +6,7 @@ import {
   resetInput,
 } from "./validation-ui.js";
 import { appendNumber } from "./number-input-action.js";
-import {numbersState, listeners} from "../state.js";
+import {numbersState} from "../state/number-state.js";
 
 
 /**
@@ -82,9 +82,7 @@ function handleAddNumberClick(globalDispatch) {
   appendNumber(value, numbersState);
 
   globalDispatch({type: "NUMBER_STATE_CHANGE"});
-  if(listeners.onUpdate){
-     listeners.onUpdate();
-  }
+ 
   resetInput(input);
 }
 

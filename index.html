@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JS array exercises</title>
-    <link rel="icon" type="image/x-icon" href="./src/img/js-icon.png" />
+    <link rel="icon" type="image/x-icon" href="./src/assets/img/js-icon.png" />
 
     <link
       rel="stylesheet"
@@ -14,15 +14,15 @@
       referrerpolicy="no-referrer"
     />
 
-    <link rel="stylesheet" href="./dist/output.css" />
-        <script
+    <script
       src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.3/dist/dotlottie-wc.js"
       type="module"
     ></script>
-    <script type="module" src="./src/js/animation/main.js"></script>
+    <link rel="stylesheet" href="./dist/output.css" />
+    <script type="module" src="./src/js/animation/controller.js"></script>
     <script type="module" src="./src/js/input/controller.js"></script>
     <script type="module" src="./src/js/array-display/controller.js"></script>
-    <script type="module" src="./src/js/app.js"></script>
+    <script type="module" src="./src/js/main.js"></script>
   </head>
   <body
     class="relative min-h-screen overflow-hidden bg-linear-to-br from-slate-900 via-slate-800 to-slate-700 p-2"
@@ -35,20 +35,18 @@
       ></div>
       <div class="flex justify-center gap-3">
         <img
-          src="./src/img/exercise-icon.png"
+          src="./src/assets/img/exercise-icon.png"
           alt="exercise icon"
           class="size-10"
         />
         <h1 class="text-center text-3xl font-bold text-white">
           ARRAY EXERCISES
-  
         </h1>
       </div>
 
       <div
         class="input-container relative mt-8 flex -translate-x-[120%] animate-[moveLeftToRight_5s_linear_3s_forwards] items-center gap-2"
       >
-      
         <div class="mx-auto w-1/2 animate-[stopSuddenly_1s_ease-out_8s]">
           <div
             class="flex justify-center gap-4 rounded-md bg-indigo-500 p-4 shadow-md"
@@ -62,19 +60,19 @@
             <button
               class="add__btn cursor-pointer rounded bg-indigo-600 px-3 py-2 text-sm text-white transition duration-300 hover:bg-indigo-700"
             >
-         
               Add
             </button>
           </div>
         </div>
 
-        <div class="absolute -top-10 -right-10 ">
-          <div class="dog__animation relative  animate-[dogMoveToHidden_1s_linear_8s_forwards] ">
+        <div class="absolute -top-10 -right-10">
+          <div
+            class="dog__animation relative animate-[dogMoveToHidden_2s_linear_8s_forwards]"
+          >
             <div
-              class="rope absolute -left-12 top-20 h-0.75 w-35 rotate-5 rounded-full bg-[repeating-linear-gradient(45deg,#e6c79c_0px,#e6c79c_6px,#caa472_6px,#caa472_12px)] transition-transform duration-100  animate-[ropeDrop_1s_ease_8s_forwards]"
-              
+              class="rope absolute top-20 -left-12 h-0.75 w-35 rotate-5 animate-[ropeDrop_1s_ease_8s_forwards] rounded-full bg-[repeating-linear-gradient(45deg,#e6c79c_0px,#e6c79c_6px,#caa472_6px,#caa472_12px)] transition-transform duration-100"
             ></div>
-          
+
             <dotlottie-wc
               src="https://lottie.host/ba2161b2-ece2-49c4-8e49-bcdb837a5039/d5UhdciX9c.lottie"
               autoplay
@@ -85,11 +83,13 @@
         </div>
       </div>
       <div
-        class="array-display relative mt-8 mb-6 rounded-sm border-l-8 border-orange-500 bg-slate-100 p-4 text-gray-600 transition-colors duration-200"
+        class="array-display relative mt-8 mb-6 rounded-sm border-l-8 border-orange-500 bg-slate-100 p-4 text-gray-600 transition-colors duration-400"
       >
         <p class="font-semibold">
           <span>Current Array: [</span>
-          <span class="array-display__items font-medium text-indigo-500"></span>
+          <span
+            class="array-display__items font-medium text-indigo-500 transition-colors duration-300"
+          ></span>
           <span>]</span>
         </p>
         <button
@@ -106,8 +106,10 @@
         >
           <!-- feature 1 -->
           <article
-            class="card closed-card card--positive-sum group relative w-100 overflow-hidden rounded-md border border-slate-100 bg-slate-100 p-5 transition-all duration-500 ease-out will-change-transform"
-            id="card-1"
+            class="closed-card  group relative w-100 overflow-hidden rounded-md border border-slate-100 bg-slate-100 p-5 transition-all duration-500 ease-out will-change-transform"
+            data-card
+            data-type="sum-positive"
+            data-card-id="1"
           >
             <div class="mb-4">
               <div class="mb-4 flex items-center gap-3">
@@ -172,16 +174,19 @@
               Please add some numbers first.
             </div>
             <div
-              class="card-overlay absolute inset-0 z-30 flex items-center justify-center bg-linear-to-br from-blue-600 to-cyan-500 transition duration-800"
+              class="absolute inset-0 z-30 flex items-center justify-center bg-linear-to-br from-blue-600 to-cyan-500 transition duration-800"
+              data-role="overlay"
             >
               <span class="text-5xl font-bold text-white">1</span>
             </div>
-            <button class="reset-btn hidden"></button>
+            <button class="hidden" data-button="reset"></button>
           </article>
           <!-- feature 2 -->
           <article
-            class="card closed-card card--positive-count group relative w-100 overflow-hidden rounded-md border border-slate-100 bg-slate-100 p-5 transition-all duration-500 ease-out will-change-transform"
-            id="card-2"
+            class="closed-card group relative w-100 overflow-hidden rounded-md border border-slate-100 bg-slate-100 p-5 transition-all duration-500 ease-out will-change-transform"
+            data-card
+            data-card-type="positive-count"
+            data-card-id="2"
           >
             <div class="mb-4">
               <div class="mb-4 flex items-center gap-3">
@@ -248,18 +253,20 @@
               Please add some numbers first.
             </div>
             <div
-              class="card-overlay absolute inset-0 z-30 flex items-center justify-center bg-linear-to-br from-blue-600 to-cyan-500 transition duration-800"
+              class="absolute inset-0 z-30 flex items-center justify-center bg-linear-to-br from-blue-600 to-cyan-500 transition duration-800"
+              data-role="overlay"
             >
               <span class="text-5xl font-bold text-white">2</span>
             </div>
-            <button class="reset-btn hidden"></button>
+            <button class="hidden" data-button="reset"></button>
           </article>
 
           <!-- feature 3 -->
           <article
-            class="card closed-card group relative w-100 overflow-hidden rounded-md border border-slate-100 bg-slate-100 p-5 transition-all duration-500 ease-out will-change-transform"
-            id="card-3"
-            data-type="find-min"
+            class="closed-card group relative w-100 overflow-hidden rounded-md border border-slate-100 bg-slate-100 p-5 transition-all duration-500 ease-out will-change-transform"
+            data-card
+            data-card-id="3"
+            data-card-type="find-min"
           >
             <div class="mb-4">
               <div class="mb-4 flex items-center gap-3">
@@ -316,18 +323,20 @@
               Please add some numbers first.
             </div>
             <div
-              class="card-overlay absolute inset-0 z-30 flex items-center justify-center bg-linear-to-br from-blue-600 to-cyan-500 transition duration-800"
+              class="absolute inset-0 z-30 flex items-center justify-center bg-linear-to-br from-blue-600 to-cyan-500 transition duration-800"
+              data-role="overlay"
             >
               <span class="text-5xl font-bold text-white">3</span>
             </div>
-            <button class="reset-btn hidden"></button>
+            <button class="hidden" data-button="reset"></button>
           </article>
 
           <!-- feature 4 -->
           <article
-            class="card closed-card group relative w-100 overflow-hidden rounded-md border border-slate-100 bg-slate-100 p-5 transition-all duration-500 ease-out will-change-transform"
-            id="card-4"
-            data-type="find-smallest-positive"
+            class="closed-card group relative w-100 overflow-hidden rounded-md border border-slate-100 bg-slate-100 p-5 transition-all duration-500 ease-out will-change-transform"
+            data-card
+            data-card-id="4"
+            data-card-type="find-smallest-positive"
           >
             <div class="mb-4">
               <div class="mb-4 flex items-center gap-3">
@@ -397,18 +406,20 @@
               Please add some numbers first.
             </div>
             <div
-              class="card-overlay absolute inset-0 z-30 flex items-center justify-center bg-linear-to-br from-blue-600 to-cyan-500 transition duration-800"
+              class="absolute inset-0 z-30 flex items-center justify-center bg-linear-to-br from-blue-600 to-cyan-500 transition duration-800"
+              data-role="overlay"
             >
               <span class="text-5xl font-bold text-white">4</span>
             </div>
-            <button class="reset-btn hidden"></button>
+            <button class="hidden" data-button="reset"></button>
           </article>
 
           <!-- feature 5 -->
           <article
-            class="card closed-card group relative w-100 overflow-hidden rounded-md border border-slate-100 bg-slate-100 p-5 transition-all duration-500 ease-out will-change-transform"
-            id="card-5"
-            data-type="find-last-even"
+            class="closed-card group relative w-100 overflow-hidden rounded-md border border-slate-100 bg-slate-100 p-5 transition-all duration-500 ease-out will-change-transform"
+            data-card
+            data-card-id="5"
+            data-card-type="find-last-even"
           >
             <div class="mb-4">
               <div class="mb-4 flex items-center gap-3">
@@ -475,20 +486,21 @@
               Please add some numbers first.
             </div>
             <div
-              class="card-overlay absolute inset-0 z-30 flex items-center justify-center bg-linear-to-br from-blue-600 to-cyan-500 transition duration-800"
+              class="absolute inset-0 z-30 flex items-center justify-center bg-linear-to-br from-blue-600 to-cyan-500 transition duration-800"
+              data-role="overlay"
             >
               <span class="text-5xl font-bold text-white">5</span>
             </div>
-            <button class="reset-btn hidden"></button>
+            <button class="reset-btn hidden" data-button="reset"></button>
           </article>
 
           <!-- feature 6 -->
           <article
-            class="card closed-card group relative w-100 overflow-hidden rounded-md border border-slate-100 bg-slate-100 p-5 transition-all duration-500 ease-out will-change-transform"
-            id="card-6"
-            data-type="swap-based-on-positions"
+            class="closed-card group relative w-100 overflow-hidden rounded-md border border-slate-100 bg-slate-100 p-5 transition-all duration-500 ease-out will-change-transform"
+            data-card
+            data-card-id="6"
+            data-card-type="swap-based-on-positions"
           >
-
             <div class="mb-4">
               <div class="mb-4 flex items-center gap-3">
                 <div
@@ -509,13 +521,13 @@
             </div>
 
             <button
-              class="card__btn mb-3 w-full cursor-pointer rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors duration-300 hover:bg-blue-700 active:scale-95"
+              class="mb-3 w-full cursor-pointer rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors duration-300 hover:bg-blue-700 active:scale-95"
               data-button="swap"
             >
               SWAP NOW
             </button>
             <button
-              class="card__btn mb-3 hidden w-full cursor-pointer rounded-lg bg-cyan-500 px-4 py-2 font-medium text-white transition-colors duration-300 hover:bg-cyan-600 active:scale-95"
+              class="mb-3 hidden w-full cursor-pointer rounded-lg bg-cyan-500 px-4 py-2 font-medium text-white transition-colors duration-300 hover:bg-cyan-600 active:scale-95"
               data-button="retry"
             >
               TRY AGAIN
@@ -527,7 +539,7 @@
                 <span class="processing-text z-10">Processing...</span>
 
                 <div
-                  class="absolute inset-0 z-0 processing-bar-animation bg-green-500"
+                  class="processing-bar-animation absolute inset-0 z-0 bg-green-500"
                   data-role="processing-bar"
                 ></div>
               </button>
@@ -541,7 +553,7 @@
               </span>
               <span data-role="display"></span>
               <div
-                class="absolute w-full h-1/3 top-0 left-0 z-10 flex -translate-y-full items-center justify-center bg-rose-400 text-white transition duration-00"
+                class="duration-00 absolute top-0 left-0 z-10 flex h-1/3 w-full -translate-y-full items-center justify-center bg-rose-400 text-white transition"
                 data-role="selection-warning"
               >
                 <span>Please select exactly two positions.</span>
@@ -563,11 +575,12 @@
               Please add at least two numbers first.
             </div>
             <div
-              class="card-overlay absolute inset-0 z-30 flex items-center justify-center bg-linear-to-br from-blue-600 to-cyan-500 transition duration-800"
+              class="absolute inset-0 z-30 flex items-center justify-center bg-linear-to-br from-blue-600 to-cyan-500 transition duration-800"
+              data-role="overlay"
             >
               <span class="text-5xl font-bold text-white">6</span>
             </div>
-            <button class="reset-btn hidden" data-button="reset"></button>
+            <button class="hidden" data-button="reset"></button>
           </article>
         </div>
         <div
@@ -582,62 +595,62 @@
       >
         <li
           class="counter-item--gradient cursor-pointer transition-colors duration-300 hover:text-slate-300"
-          data-card="card-1"
+          data-card-key="1"
         >
           Sum all positive numbers in the array
         </li>
 
         <li
           class="counter-item--gradient cursor-pointer transition-colors duration-300 hover:text-slate-300"
-          data-card="card-2"
+          data-card-key="2"
         >
           Count how many positive numbers in the array
         </li>
         <li
           class="counter-item--gradient cursor-pointer transition-colors duration-300 hover:text-slate-300"
-          data-card="card-3"
+          data-card-key="3"
         >
           Find the smallest number in the array
         </li>
         <li
           class="counter-item--gradient cursor-pointer transition-colors duration-300 hover:text-slate-300"
-          data-card="card-4"
+          data-card-key="4"
         >
           Find the smallest positive number in the array
         </li>
         <li
           class="counter-item--gradient cursor-pointer transition-colors duration-300 hover:text-slate-300"
-          data-card="card-5"
+          data-card-key="5"
         >
           Find the last even number in the array
         </li>
         <li
           class="counter-item--gradient cursor-pointer transition-colors duration-300 hover:text-slate-300"
-          data-card="card-6"
+          data-card-key="6"
         >
           Swap two elements based on their positions
         </li>
         <li
           class="counter-item--gradient cursor-pointer transition-colors duration-300 hover:text-slate-300"
-          data-card="card-7"
+          data-card-key="7"
         >
           Sort the array in ascending order
         </li>
         <li
           class="counter-item--gradient cursor-pointer transition-colors duration-300 hover:text-slate-300"
-          data-card="card-8"
+          data-card-key="8"
         >
           Find the first prime number in the array
         </li>
         <li
           class="counter-item--gradient cursor-pointer transition-colors duration-300 hover:text-slate-300"
-          data-card="card-9"
+          data-card-key="9"
         >
           Count integers after adding real numbers
         </li>
         <li
           class="counter-item--gradient cursor-pointer transition-colors duration-300 hover:text-slate-300"
-          data-card="card-10"
+          data-card-key="10"
         >
           Compare the number of positive and negative values
         </li>

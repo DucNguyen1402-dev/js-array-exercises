@@ -1,4 +1,4 @@
-import { $ } from "../dom-query.js";
+import { $ } from "./index.js";
 
 /**
  * @type {Object.<string, HTMLElement>} Factory function to select and return DOM elements.

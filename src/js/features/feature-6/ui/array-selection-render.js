@@ -1,4 +1,4 @@
-import { invariantRequired } from '../utils/index.js';
+import { invariantRequired } from '../index.js';
 
 /**
  * Renders a list of numbers with associated selection buttons into the DOM.

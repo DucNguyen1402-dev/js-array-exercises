@@ -1,5 +1,7 @@
 import { $ } from "../index.js";
-export { numbersState, isArrayEmpty } from '../../state.js';
+export { numbersState } from '../../state/number-state.js';
+export { isArrayEmpty } from '../../state/number-state-services.js';
+
 /**
  * @type {Object.<string, HTMLElement>} Factory function to select and return DOM elements.
  */
@@ -10,8 +12,8 @@ export function getPositiveSummaryDOM() {
     positiveDisplayEl: $(".positive-count__items"),
     resultContainer: $(".positive-count__result"),
     totalDisplay: $(".positive-count__totalValue"),
-    processingIcon: $(".card--positive-count").querySelector(".processing-icon"),
-    resetBtn: $(".card--positive-count").querySelector(".reset-btn"),
+    processingIcon: $('[data-card-type="positive-count"]').querySelector(".processing-icon"),
+    resetBtn: $('[data-card-type="positive-count"]').querySelector('[data-button="reset"]'),
     emptyWarning: $('[data-role="count-positive-empty-warning"]')
   };
 }

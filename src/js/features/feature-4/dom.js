@@ -1,5 +1,7 @@
 import { $ } from "../index.js";
-export { numbersState, isArrayEmpty } from '../../state.js';
+export { numbersState } from '../../state/number-state.js';
+export { isArrayEmpty } from '../../state/number-state-services.js';
+
 /**
  * @type {Object.<string, HTMLElement>} Factory function to select and return DOM elements.
  */
@@ -8,9 +10,9 @@ export function getFindSmallestPositiveEl(){
         findSmallestPossitiveBtn: $('[data-button="find-smallest-positive-submit"]'),
         resultContainer: $('[data-container="find-smallest-positive-result"]'),
         smallestPositiveValue: $('[data-role="smallest-positive-value"]'),
-        processingIcon: $('[data-type="find-smallest-positive"]').querySelector('[data-role="processing-icon"]'),
+        processingIcon: $('[data-card-type="find-smallest-positive"]').querySelector('[data-role="processing-icon"]'),
         emptyWarning: $('[data-role="find-smallest-positive-empty-warning"]'),
-        resetBtn: $('[data-type="find-smallest-positive"]').querySelector('.reset-btn'),
+        resetBtn: $('[data-card-type="find-smallest-positive"]').querySelector('[data-button="reset"]'),
         notFoundContainer: $('[data-container="result-not-found"]')
     };
 }

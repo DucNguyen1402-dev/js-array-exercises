@@ -1,4 +1,4 @@
-import { invariantRequired, toggleClasses } from '../utils/index.js';
+import { invariantRequired, toggleClasses } from '../index.js';
 
 /**
  * Computes a simplified UI visibility object from the raw display state.

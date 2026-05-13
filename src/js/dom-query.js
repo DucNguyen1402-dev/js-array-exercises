@@ -32,3 +32,8 @@ export function $all(selector) {
   }
   return els;
 }
+
+export function el(tagName) {
+  const el = document.createElement(tagName);
+  return el;
+}

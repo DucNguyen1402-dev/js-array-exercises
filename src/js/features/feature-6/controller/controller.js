@@ -85,7 +85,7 @@ export function createSwapController({ globalDispatch }) {
       dispatchers: { localDispatch },
       swapElements,
     },
-    api: { refreshSwapSelectionUI },
+    api: { ui: {refreshSwapSelectionUI} },
   };
 }
 

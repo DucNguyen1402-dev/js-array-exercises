@@ -1,5 +1,3 @@
-import { arrayDisplayServices } from './array-display/services.js';
-
 /**
  * Registry of action types mapped to array visualization handlers.
  * @type {Record<string, Function>}
@@ -26,20 +24,7 @@ const actionHandlers = {
   ...arrayDisplayActions,
 };
 
-/**
- * Dispatches actions to the corresponding handler with injected services.
- * @param {Action} action - The action object containing type and payload.
- */
 
-export function globalDispatch(action) {
-  const handler = actionHandlers[action.type];
-  const dispatchContext = {
-    services: {
-      arrayDisplayServices,
-    },
-  };
-  handler?.(action, dispatchContext);
-}
 
 /**
  * Triggers a blink animation for a specific number in the array.
@@ -48,9 +33,9 @@ export function globalDispatch(action) {
  */
 function handleNumberHighlight(action, dispatchContext) {
   const {
-    services: { arrayDisplayServices },
+    renders: { arrayDisplay: {triggerArrayNumberBlink} },
   } = dispatchContext;
-  arrayDisplayServices.triggerArrayNumberBlink(action.payload.id);
+  triggerArrayNumberBlink(action.payload.id);
 }
 
 /**
@@ -60,16 +45,18 @@ function handleNumberHighlight(action, dispatchContext) {
  */
 function handleSwapOnPositions(action, dispatchContext) {
   const {
-    services: { arrayDisplayServices },
+  renders: { arrayDisplay: {setPositionHighlightVisible } },
+  services: {arrayDisplay: {swapNumbersOnPositions}},
+  ui: {arrayDisplay: {reRenderArray}}
   } = dispatchContext;
   const { order1, id1, order2, id2 } = action.payload;
-  arrayDisplayServices.swapNumbersOnPositions(id1, id2);
-  arrayDisplayServices.reRenderArray();
+  swapNumbersOnPositions(id1, id2);
+  reRenderArray();
   [
     [id1, order2],
     [id2, order1],
   ].forEach(([id, order]) => {
-    arrayDisplayServices.setPositionHighlightVisible(id, order, true);
+    setPositionHighlightVisible(id, order, true);
   });
 }
 
@@ -80,11 +67,11 @@ function handleSwapOnPositions(action, dispatchContext) {
  */
 function handleHighlightSelection(action, dispatchContext) {
   const {
-    services: { arrayDisplayServices },
+     renders: { arrayDisplay: {setPositionHighlightVisible} },
   } = dispatchContext;
 
   const { id, order } = action.payload;
-  arrayDisplayServices.setPositionHighlightVisible(id, order, true);
+  setPositionHighlightVisible(id, order, true);
 }
 
 /**
@@ -94,10 +81,10 @@ function handleHighlightSelection(action, dispatchContext) {
  */
 function handleHightlightSelectionReset(action, dispatchContext) {
   const {
-    services: { arrayDisplayServices },
+   renders: { arrayDisplay: {setPositionHighlightVisible} },
   } = dispatchContext;
   const { id, order } = action.payload;
-  arrayDisplayServices.setPositionHighlightVisible(id, order, false);
+  setPositionHighlightVisible(id, order, false);
 }
 
 /**
@@ -107,53 +94,71 @@ function handleHightlightSelectionReset(action, dispatchContext) {
  */
 function handleSwapSelectionHighlightReset(action, dispatchContext) {
   const {
-    services: { arrayDisplayServices },
+    renders: { arrayDisplay: {setPositionHighlightVisible} },
   } = dispatchContext;
   const { order1, id1, order2, id2 } = action.payload;
   [
     [id1, order2],
     [id2, order1],
   ].forEach(([id, order]) => {
-    arrayDisplayServices.setPositionHighlightVisible(id, order, false);
+    setPositionHighlightVisible(id, order, false);
   });
 }
 
 function handleNumberStateChange(action, dispatchContext) {
   const {
-     ui: {refreshSwapSelectionUI}
+    ui: { swap: {refreshSwapSelectionUI} ,
+  arrayDisplay: {reRenderArray}},
+    
   } = dispatchContext;
+  reRenderArray();
   refreshSwapSelectionUI();
 }
 
-function createGlobalDispatch(controllerDeps) {
-  const {
-      services: { arrayDisplayServices },
-    } = controllerDeps;
+const createControllerRegistry = (dispatchContext) => {
+  const ensureRegion = (region) => {
+    dispatchContext[region] ??= {};
+  };
 
-    const dispatchContext = {
-      services: {
-        arrayDisplayServices,
-      },
-      ui: {}
-    };
-    
-  function globalDispatch(action) {
-  
+  const register = (region, namespace, deps, label) => {
+    ensureRegion(region);
+
+    const bucket = dispatchContext[region];
+
+    if (bucket[namespace]) {
+      throw new Error(`${label} "${namespace}" already exists`);
+    }
+
+    bucket[namespace] = deps;
+  };
+
+  return {
+    registerUI: (namespace, uiDeps) =>
+      register("ui", namespace, uiDeps, "UI namespace"),
+
+    registerServices: (namespace, serviceDeps) =>
+      register("services", namespace, serviceDeps, "Service namespace"),
+
+    registerRenders: (namespace, renderDeps) =>
+      register("renders", namespace, renderDeps, "Render namespace"),
+  };
+};
+
+function createGlobalDispatch(dispatchContext) {
+  return (action) =>{
     const handler = actionHandlers[action.type];
     handler?.(action, dispatchContext);
   }
 
-  const  connectSwapUI = ({ refreshSwapSelectionUI }) => {
-    dispatchContext.ui.refreshSwapSelectionUI = refreshSwapSelectionUI;
-  };
-
-  return { globalDispatch, connectSwapUI };
+  return { globalDispatch, controllerRegistry };
 }
 
 export function createController() {
-  const controllerDeps = {
-    services: { arrayDisplayServices },
-  };
+  const dispatchContext = {};
 
- return createGlobalDispatch(controllerDeps);
+  const controllerRegistry = createControllerRegistry(dispatchContext);
+  const globalDispatch =  createGlobalDispatch(dispatchContext);
+
+  return {globalDispatch, controllerRegistry};
 }
+

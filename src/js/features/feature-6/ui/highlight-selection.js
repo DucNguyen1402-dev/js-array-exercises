@@ -1,4 +1,4 @@
-import { invariantRequired , toggleClasses} from '../utils/index.js';
+import { invariantRequired , toggleClasses} from '../index.js';
 /**
  * Visual configurations for selection buttons.
  * @type {Object}
