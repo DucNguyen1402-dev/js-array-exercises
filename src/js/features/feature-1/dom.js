@@ -8,17 +8,19 @@ export {isArrayEmpty } from '../../state/number-state-services.js';
 export function getPositiveSummaryDOM() {
   return {
     sumBtn: $(".sum-btn"),
-    valueDisplay: $(".positive-sum__value"),
-    listDisplay: $(".positive-sum__list"),
-    positiveNumbers: $(".positive-sum__numbers"),
-    processingIcon: $('[data-type="sum-positive"]').querySelector(".processing-icon"),
-    summaryArea: $(".positive-sum__area"),
-    resetBtn: $('[data-type="sum-positive"]').querySelector('[data-button="reset"]'),
-    emptyWarning: $('[data-role="sum-positive-empty-warning"]')
+    sumValueDisplay: $(".positive-sum__value"),
+    displayList: $(".positive-sum__list"),
+    positiveNumberDisplay: $(".positive-sum__numbers"),
+    processingBar: $('[data-card-type="sum-positive"]').querySelector(".processing-icon"),
+    sumArea: $(".positive-sum__area"),
+    resetBtn: $('[data-card-type="sum-positive"]').querySelector('[data-button="reset"]'),
+    emptyWarning: $('[data-role="sum-positive-empty-warning"]'),
+    processingAnimator: $('[data-card-type="sum-positive"] [data-role = "processing-animation"]')
   };
 }
 
 /** *
  * @type {Object.<string, HTMLElement>} Initialized DOM element references.
  */
-export const DOM = getPositiveSummaryDOM();
+export const dom = getPositiveSummaryDOM();
+

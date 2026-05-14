@@ -1,10 +1,10 @@
 import {createCardAnimations} from "./card-animation/main.js";
-import { initPositiveSumEvents } from './features/feature-1/controller.js';
+import { createSumPositiveFeature } from './features/feature-1/main.js';
 import { initPositiveCountEvents } from './features/feature-2/controller.js';
 import { initFindMinEvents } from './features/feature-3/controller.js';
 import { initFindSmallestPosEvents } from './features/feature-4/controller.js';
 import { initFindLastEvenNumberEvents } from './features/feature-5/controller.js';
-import { createSwapNumbersComponent } from './features/feature-6/component.js';
+import { createSwapNumbersComponent } from './features/feature-6/main.js';
 import { createArrayDisplayComponent } from './array-display/component.js';
 import { initAddBtnEvent } from './input/controller.js';
 import { createController } from './controller.js';
@@ -66,7 +66,7 @@ export function initApp() {
     globalDispatch,
   });
 
-  //3. Setup the connection utility for registering components to the registr
+  //3. Setup the connection utility for registering components to the register
   const handleConnection = createHandleConnection(controllerRegistry);
 
   //4. Setup Connections
@@ -75,8 +75,8 @@ export function initApp() {
   //5. setup card animation
   createCardAnimations();
 
-  //6. Setup Feature Events
-  initPositiveSumEvents();
+  //6. create Features 
+  createSumPositiveFeature();
   initPositiveCountEvents();
   initFindMinEvents();
   initFindSmallestPosEvents();
