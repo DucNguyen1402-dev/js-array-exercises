@@ -1,19 +1,9 @@
-import { invariantRequired } from './index.js';
+import { invariantRequired , waitForAnimationEnd} from './index.js';
 /**
  * @module SumPositiveUseCases
  * @description Business workflows for calculating and resetting the positive sum feature.
  */
 
-/**
- * Utility to pause execution until a CSS animation finishes.
- * @param {HTMLElement} el - The element with the running animation.
- * @returns {Promise<void>}
- */
-const waitAnimationEnd = async (el) => {
-  return new Promise((resolve) => {
-    el.addEventListener('animationend', resolve, { once: true });
-  });
-};
 
 /**
  * Orchestrates the positive sum calculation workflow, including validation and animation.
@@ -33,9 +23,9 @@ export async function sumPositive({
   state: { displayState, numbersState },
   services: { isArrayEmpty },
   domain: { calculatePositiveSum },
-  utils: { getPositiveNumbers },
+  utils: { getPositiveNumbers, clearTextContent },
   renders: { updateSumPosUI },
-  ui: { setSumResult, setPositiveList, clearTextContent },
+  ui: { setSumResult, setPositiveList },
 }) {
   const { positiveNumberDisplay, sumValueDisplay, processingAnimator } =
     positiveSumElements;
@@ -48,7 +38,7 @@ export async function sumPositive({
   // 1. Validation Logic
   if (isArrayEmpty(numbersState)) {
     displayState.emptyArray = true;
-    displayState.sumPosStatus = 'idle';
+    displayState.sumPosStatus = 'disabled';
     updateSumPosUI(displayState, positiveSumElements);
     clearTextContent([sumValueDisplay, positiveNumberDisplay]);
     return;
@@ -67,7 +57,7 @@ export async function sumPositive({
   displayState.sumPosStatus = 'processing';
   updateSumPosUI(displayState, positiveSumElements);
 
-  await waitAnimationEnd(processingAnimator);
+  await waitForAnimationEnd(processingAnimator, "processingAnimator");
 
   displayState.sumPosStatus = 'success';
   updateSumPosUI(displayState, positiveSumElements);
@@ -87,5 +77,29 @@ export function resetSumPosUI({
   renders: { updateSumPosUI },
 }) {
   displayState.sumPosStatus = 'idle';
+  updateSumPosUI(displayState, positiveSumElements);
+}
+
+
+/**
+ * Synchronizes the initial display state with the data state and triggers a re-render.
+ * 
+ * @param {Object} context - Dependency injection object.
+ * @param {Object} context.positiveSumElements - Relevant DOM elements.
+ * @param {Object} context.internalState - Feature-specific state.
+ * @param {Object} context.globalState - Shared application state (numbersState).
+ * @param {Object} context.renders - UI update orchestrators.
+ * @param {Object} context.globalStateServices - Validation services.
+ */
+export function renderSumPosUI({
+  positiveSumElements,
+  internalState: { displayState },
+  globalState: {numbersState},
+  renders: { updateSumPosUI },
+  globalStateServices: { isArrayEmpty },
+}) {
+  const isEmpty = isArrayEmpty(numbersState);
+  displayState.emptyArray = isEmpty;
+  displayState.sumPosStatus = isEmpty? "disabled": "idle";
   updateSumPosUI(displayState, positiveSumElements);
 }

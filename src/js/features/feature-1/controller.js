@@ -13,13 +13,12 @@ import {
   renders,
 } from './deps.js';
 
-
 /**
  * =======================================================================================
  * FEATURE: SUM POSITIVE MODULE
  * ---------------------------------------------------------------------------------------
  * @module sumPositive
- * @description Orchestrates dependencies, state, and action dispatching for the 
+ * @description Orchestrates dependencies, state, and action dispatching for the
  * Sum Positive feature.
  * =======================================================================================
  */
@@ -62,12 +61,23 @@ export function createSumPositiveController() {
     ui,
     renders,
   };
+
+  const { renderSumPosUI } = useCases;
+
+  const renderUI = () =>
+    renderSumPosUI({
+      positiveSumElements,
+      internalState: { displayState: internalState.displayState },
+      globalState: { numbersState: globalState.numbersState },
+      renders: { updateSumPosUI: renders.updateSumPosUI },
+      globalStateServices: { isArrayEmpty: globalStateServices.isArrayEmpty },
+    });
+
+  renderUI();
   const localDispatch = createLocalDispatch(dispatchDeps);
 
-  return { positiveSumElements, localDispatch };
+  return { positiveSumElements, localDispatch, reRenderSumPosFeatureUI: renderUI };
 }
-
-
 
 /**
  * ==============================================================================================
@@ -80,7 +90,7 @@ export function createSumPositiveController() {
 
 /**
  * Handles the positive sum calculation by injecting scoped dependencies into the use case.
- * 
+ *
  * @param {Object} _action - The dispatched action object (unused).
  * @param {Object} deps - Global dependency container.
  * @param {Object} deps.useCases - Logic orchestration methods.
@@ -114,7 +124,8 @@ function handleSumPositive(_action, deps) {
     },
 
     utils: {
-      getPositiveNumbers: deps.utils.getPositiveNumbers,
+      getPositiveNumbers: deps.utils.sumPos.getPositiveNumbers,
+       clearTextContent: deps.utils.dom.clearTextContent,
     },
 
     renders: {
@@ -124,14 +135,14 @@ function handleSumPositive(_action, deps) {
     ui: {
       setSumResult: deps.ui.setSumResult,
       setPositiveList: deps.ui.setPositiveList,
-      clearTextContent: deps.ui.clearTextContent,
+
     },
   });
 }
 
 /**
  * Handles the UI reset flow by triggering the corresponding use case with mapped dependencies.
- * 
+ *
  * @param {Object} _action - The dispatched action object (unused).
  * @param {Object} deps - Global dependency container.
  * @param {Object} deps.useCases - Logic orchestration methods.

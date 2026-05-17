@@ -5,10 +5,7 @@
  * @returns {number|undefined} The smallest number found or undefined.
  */
 export function findMinNumber(array) {
-  if (!array.length) return undefined;
+  if (!array.length) return undefined; 
 
-  const minValue = Math.min(...array);
-  const index = array.indexOf(minValue);
-
-  return { minValue, index };
+  return Math.min(...array);
 }

@@ -1,24 +1,24 @@
-import { $ } from "../index.js";
-export { numbersState } from '../../state/number-state.js';
-export { isArrayEmpty } from '../../state/number-state-services.js';
+import { $ } from "./index.js";
+
 
 /**
  * @type {Object.<string, HTMLElement>} Factory function to select and return DOM elements.
  */
-export function getPositiveSummaryDOM() {
+export function getPositiveCountElements() {
   return {
-    countPositiveBtn: $(".positive-count__btn"),
-    listContainer: $(".positive-count__list"),
-    positiveDisplayEl: $(".positive-count__items"),
-    resultContainer: $(".positive-count__result"),
-    totalDisplay: $(".positive-count__totalValue"),
-    processingIcon: $('[data-card-type="positive-count"]').querySelector(".processing-icon"),
+    countPosBtn: $(".positive-count__btn"),
+    posListContainer: $(".positive-count__list"),
+    posListDisplay: $(".positive-count__items"),
+    countResultContainer: $(".positive-count__result"),
+    posCountDisplay: $(".positive-count__totalValue"),
+    processingBar: $('[data-card-type="positive-count"]').querySelector(".processing-icon"),
     resetBtn: $('[data-card-type="positive-count"]').querySelector('[data-button="reset"]'),
-    emptyWarning: $('[data-role="count-positive-empty-warning"]')
+    emptyWarning: $('[data-role="count-positive-empty-warning"]'),
+    processingAminator: $('[data-card-type="positive-count"] [data-role ="processing-animator"]'),
   };
 }
 
 /** *
  * @type {Object.<string, HTMLElement>} Initialized DOM element references.
  */
-export const DOM = getPositiveSummaryDOM();
+export const dom = getPositiveCountElements();

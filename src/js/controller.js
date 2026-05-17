@@ -24,8 +24,6 @@ const actionHandlers = {
   ...arrayDisplayActions,
 };
 
-
-
 /**
  * Triggers a blink animation for a specific number in the array.
  * @param {Object} action - Contains the payload with target ID.
@@ -33,7 +31,9 @@ const actionHandlers = {
  */
 function handleNumberHighlight(action, dispatchContext) {
   const {
-    renders: { arrayDisplay: {triggerArrayNumberBlink} },
+    renders: {
+      arrayDisplay: { triggerArrayNumberBlink },
+    },
   } = dispatchContext;
   triggerArrayNumberBlink(action.payload.id);
 }
@@ -45,9 +45,15 @@ function handleNumberHighlight(action, dispatchContext) {
  */
 function handleSwapOnPositions(action, dispatchContext) {
   const {
-  renders: { arrayDisplay: {setPositionHighlightVisible } },
-  services: {arrayDisplay: {swapNumbersOnPositions}},
-  ui: {arrayDisplay: {reRenderArray}}
+    renders: {
+      arrayDisplay: { setPositionHighlightVisible },
+    },
+    services: {
+      arrayDisplay: { swapNumbersOnPositions },
+    },
+    ui: {
+      arrayDisplay: { reRenderArray },
+    },
   } = dispatchContext;
   const { order1, id1, order2, id2 } = action.payload;
   swapNumbersOnPositions(id1, id2);
@@ -67,7 +73,9 @@ function handleSwapOnPositions(action, dispatchContext) {
  */
 function handleHighlightSelection(action, dispatchContext) {
   const {
-     renders: { arrayDisplay: {setPositionHighlightVisible} },
+    renders: {
+      arrayDisplay: { setPositionHighlightVisible },
+    },
   } = dispatchContext;
 
   const { id, order } = action.payload;
@@ -81,7 +89,9 @@ function handleHighlightSelection(action, dispatchContext) {
  */
 function handleHightlightSelectionReset(action, dispatchContext) {
   const {
-   renders: { arrayDisplay: {setPositionHighlightVisible} },
+    renders: {
+      arrayDisplay: { setPositionHighlightVisible },
+    },
   } = dispatchContext;
   const { id, order } = action.payload;
   setPositionHighlightVisible(id, order, false);
@@ -94,7 +104,9 @@ function handleHightlightSelectionReset(action, dispatchContext) {
  */
 function handleSwapSelectionHighlightReset(action, dispatchContext) {
   const {
-    renders: { arrayDisplay: {setPositionHighlightVisible} },
+    renders: {
+      arrayDisplay: { setPositionHighlightVisible },
+    },
   } = dispatchContext;
   const { order1, id1, order2, id2 } = action.payload;
   [
@@ -107,12 +119,23 @@ function handleSwapSelectionHighlightReset(action, dispatchContext) {
 
 function handleNumberStateChange(action, dispatchContext) {
   const {
-    ui: { swap: {refreshSwapSelectionUI} ,
-  arrayDisplay: {reRenderArray}},
-    
+    ui: {
+      countPos: { reRenderCountPosFeatureUI },
+      sumPos: { reRenderSumPosFeatureUI },
+      findMin: { reRenderFindMinFeatureUI },
+      findSmallestPos: {reRenderFindSmallestPosUI},
+      findLastEven: {reRenderFindLastEvenFeatureUI},
+      swap: { reRenderSwapSelectionFeatureUI },
+      arrayDisplay: { reRenderArray },
+    },
   } = dispatchContext;
   reRenderArray();
-  refreshSwapSelectionUI();
+  reRenderSumPosFeatureUI();
+  reRenderFindMinFeatureUI();
+  reRenderCountPosFeatureUI();
+  reRenderFindSmallestPosUI();
+  reRenderFindLastEvenFeatureUI();
+  reRenderSwapSelectionFeatureUI();
 }
 
 const createControllerRegistry = (dispatchContext) => {
@@ -134,21 +157,21 @@ const createControllerRegistry = (dispatchContext) => {
 
   return {
     registerUI: (namespace, uiDeps) =>
-      register("ui", namespace, uiDeps, "UI namespace"),
+      register('ui', namespace, uiDeps, 'UI namespace'),
 
     registerServices: (namespace, serviceDeps) =>
-      register("services", namespace, serviceDeps, "Service namespace"),
+      register('services', namespace, serviceDeps, 'Service namespace'),
 
     registerRenders: (namespace, renderDeps) =>
-      register("renders", namespace, renderDeps, "Render namespace"),
+      register('renders', namespace, renderDeps, 'Render namespace'),
   };
 };
 
 function createGlobalDispatch(dispatchContext) {
-  return (action) =>{
+  return (action) => {
     const handler = actionHandlers[action.type];
     handler?.(action, dispatchContext);
-  }
+  };
 
   return { globalDispatch, controllerRegistry };
 }
@@ -157,8 +180,7 @@ export function createController() {
   const dispatchContext = {};
 
   const controllerRegistry = createControllerRegistry(dispatchContext);
-  const globalDispatch =  createGlobalDispatch(dispatchContext);
+  const globalDispatch = createGlobalDispatch(dispatchContext);
 
-  return {globalDispatch, controllerRegistry};
+  return { globalDispatch, controllerRegistry };
 }
-

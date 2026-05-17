@@ -1,168 +1,27 @@
-import {setProcessingIconHidden} from "../shared/ui/processing-icon-ui.js"
+import { invariantRequired } from './index.js';
 
 /**
- * =================================
- *      1. DATA CONFIG
- * ================================
+ * Updates the text content of a DOM element with a list of positive numbers.
+ * 
+ * @param {HTMLElement} el - The target element to update.
+ * @param {Array<number|string>} display - Array of values to join and display.
  */
-
-/**
- * @constant {number} -The duration (in milliseconds) for simulated loading states.
- */
-const LOADING_DURATION = 900;
-
-/**
- * =======================================
- *      2.  UI RENDERING
- * ======================================
- */
-
-/*============2.1 POSITIVE LIST=============*/
-
-/**
- * Toggles the visibility of the list container by adding or removing the 'hidden' class.
- * @param {HTMLElement} listContainer - The container element to toggle.
- * @param {boolean} toHidden - Whether to hide (true) or show (false) the container.
- */
-function setListContainerToHidden(listContainer, toHidden = true) {
-  listContainer.classList.toggle('hidden', toHidden);
+export function setPosListDisplay(el, display) {
+  invariantRequired([['posListDisplay', el]]);
+    if(display.length === 0){
+      el.textContent = "No positive numbers found.";
+      return;
+    }
+  el.textContent = display.join(', ');
 }
 
 /**
- * Updates the text content of the display element with a comma-separated list of numbers.
- * @param {HTMLElement} positiveDisplayEl - The element where the list will be rendered.
- * @param {number[]} positiveList - The array of numbers to display.
+ * Updates the text content of a DOM element with the positive count result.
+ * 
+ * @param {HTMLElement} el - The target element to update.
+ * @param {number|string} display - The count value to display.
  */
-function renderPositiveList(positiveDisplayEl, positiveList) {
-  positiveDisplayEl.textContent = positiveList.join(', ');
+export function setPosCountDisplay(el, display) {
+  invariantRequired([['posCountDisplay', el]]);
+  el.textContent = `${display}`;
 }
-
-/**
- * Coordinates showing the container and rendering the list of positive numbers.
- * @param {HTMLElement} listContainer - The parent container to unhide.
- * @param {HTMLElement} positiveDisplayEl - The specific element for text rendering.
- * @param {number[]} positiveList - The data to be displayed.
- */
-function handlePositiveList(listContainer, positiveDisplayEl, positiveList) {
-  setListContainerToHidden(listContainer, false);
-  renderPositiveList(positiveDisplayEl, positiveList);
-}
-
-/*============2.2 SUMMARY RESULT=============*/
-/**
- * Toggles the visibility of the result container.
- * @param {HTMLElement} resultContainer - The element to show or hide.
- * @param {boolean} toHidden - State to apply (true to hide, false to show).
- */
-function setResultContainerToHidden(resultContainer, toHidden = true) {
-  resultContainer.classList.toggle('hidden', toHidden);
-}
-
-/**
- * Updates the UI with the calculated total count of positive numbers.
- * @param {number} positiveCount - The count value to display.
- * @param {HTMLElement} totalDisplay - The element that holds the count text.
- */
-function showTotalCount(positiveCount, totalDisplay) {
-  totalDisplay.textContent = `${positiveCount}`;
-}
-
-/**
- * Coordinates the display logic: reveals the result container and updates the count value.
- * @param {number} positiveCount - The data to display.
- * @param {HTMLElement} resultContainer - The container to reveal.
- * @param {HTMLElement} totalDisplay - The specific element for the text update.
- */
-function handlePositiveCount(positiveCount, resultContainer, totalDisplay) {
-  setResultContainerToHidden(resultContainer, false);
-  showTotalCount(positiveCount, totalDisplay);
-}
-
-/*============2.3 EMPTY WARNING =============*/
-/**
- * Toggles the visibility of the empty state warning element.
- * @param {HTMLElement} emptyWarning - The warning element to show or hide.
- * @param {boolean} [toHidden=true] - Whether to hide (true) or show (false) the warning.
- */
-function setEmptyWarningToHidden(emptyWarning, toHidden = true){
-  emptyWarning.classList.toggle("hidden", toHidden);
-}
-
-/**
- * =======================================
- *       3.  RESET UI FUNCTION
- * ======================================
- */
-
-/**
- * Resets the positive count interface to its initial state.
- * Hides all related containers and icons, then clears or resets text content.
- * @param {Object} UIElement - Object containing references to relevant DOM elements.
- */
-export function resetPositiveCountUI(UIElement) {
-  const {
-    listContainer,
-    positiveDisplayEl,
-    resultContainer,
-    totalDisplay,
-    processingIcon,
-    emptyWarning
-  } = UIElement;
-  setProcessingIconHidden(processingIcon, true);
-  setListContainerToHidden(listContainer, true);
-  setEmptyWarningToHidden(emptyWarning, true);
-
-  positiveDisplayEl.textContent = '';
-  setResultContainerToHidden(resultContainer, true);
-  totalDisplay.textContent = '0';
-}
-
-/**
- * =======================================
- *      4.  ORCHESTRATION FUNCTION
- * ======================================
- */
-
-/*============1. EDGE CASE FLOW (EMPTY) =============*/
-/**
- * Handles the UI state when the array is empty for the positive count feature.
- * Resets the count display and ensures the empty warning is hidden/reset before any new action.
- * @param {Object} countPositiveUI - The collection of UI elements for the positive count feature.
- */
-export function handleArrayEmptyWarning(countPositiveUI){
-  resetPositiveCountUI(countPositiveUI);
-  setEmptyWarningToHidden(countPositiveUI.emptyWarning, false);
-}
-
-/*============2. MAIN FLOW  =============*/
-
-/**
- * Main function to orchestrate the UI update for positive number counting.
- * Resets the current UI, shows a loading state, and then renders the
- * results after a simulated delay.
- * * @param {number[]} positiveList - Array of positive numbers to display.
- * @param {number} positiveCount - The total count of positive numbers.
- * @param {Object} UIElement - Collection of DOM elements for the positive count section.
- */
-export function updatePositiveNumbersCountUI(
-  positiveList,
-  positiveCount,
-  UIElement
-) {
-  const {
-    listContainer,
-    positiveDisplayEl,
-    resultContainer,
-    totalDisplay,
-    processingIcon,
-  } = UIElement;
-  resetPositiveCountUI(UIElement);
-  setProcessingIconHidden(processingIcon, false);
-  setTimeout(() => {
-    setProcessingIconHidden(processingIcon, true);
-    handlePositiveList(listContainer, positiveDisplayEl, positiveList);
-    handlePositiveCount(positiveCount, resultContainer, totalDisplay);
-  }, LOADING_DURATION);
-}
-
-

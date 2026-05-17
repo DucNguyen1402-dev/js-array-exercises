@@ -10,7 +10,11 @@ import {initPositiveSumEvents} from "./event.js";
  * Bootstraps the sum positive feature by linking the controller and event listeners.
  */
 export function createSumPositiveFeature(){
-    const {positiveSumElements, localDispatch} = createSumPositiveController();
+    const {positiveSumElements, localDispatch, reRenderSumPosFeatureUI} = createSumPositiveController();
 
     initPositiveSumEvents({positiveSumElements, localDispatch});
+
+    return {
+        ui: {reRenderSumPosFeatureUI}
+    }
 }

@@ -1,6 +1,4 @@
-import { $ } from "../index.js";
-export { numbersState } from '../../state/number-state.js';
-export { isArrayEmpty } from '../../state/number-state-services.js';
+import { $ } from "./index.js";
 
 
 /**
@@ -10,15 +8,15 @@ export function getFindLastEvenElements(){
     return{
         findBtn: $('[data-button="find-last-even-submit"]'),
         resultContainer: $('[data-container="find-last-even-result"]'),
-        lastEvenDisplay: $('[data-role="last-even-value"]'),
-        processingIcon: $('[data-card-type="find-last-even"]').querySelector('[data-role="processing-icon"]'),
+        lastEvenValueDisplay: $('[data-role="last-even-value"]'),
+        processingBar: $('[data-card-type="find-last-even"]').querySelector('[data-role="processing-icon"]'),
+        processingAnimator: $('[data-card-type="find-last-even"] [data-role ="processing-animator"]'),
         emptyWarning:  $('[data-card-type="find-last-even"]').querySelector('[data-role="empty-warning"]'),
         resetBtn: $('[data-card-type="find-last-even"]').querySelector('[data-button="reset"]'),
         notFoundContainer:$('[data-card-type="find-last-even"]').querySelector('[data-container="result-not-found"]')
     };
 }
-
 /** *
  * @type {Object.<string, HTMLElement>} Initialized DOM element references.
  */
-export const findLastEvenElements = getFindLastEvenElements();
+export const dom = getFindLastEvenElements();

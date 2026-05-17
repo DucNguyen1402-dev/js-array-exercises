@@ -1,10 +1,10 @@
-import {createCardAnimations} from "./card-animation/main.js";
+import { createCardAnimations } from './card-animation/main.js';
 import { createSumPositiveFeature } from './features/feature-1/main.js';
-import { initPositiveCountEvents } from './features/feature-2/controller.js';
-import { initFindMinEvents } from './features/feature-3/controller.js';
-import { initFindSmallestPosEvents } from './features/feature-4/controller.js';
-import { initFindLastEvenNumberEvents } from './features/feature-5/controller.js';
-import { createSwapNumbersComponent } from './features/feature-6/main.js';
+import { createCountPosFeature } from './features/feature-2/main.js';
+import { createFindMinFeature } from './features/feature-3/main.js';
+import { createFindSmallestPosFeature } from './features/feature-4/main.js';
+import { createFindLastEvenFeature } from './features/feature-5/main.js';
+import { createSwapNumbersFeature } from './features/feature-6/main.js';
 import { createArrayDisplayComponent } from './array-display/component.js';
 import { initAddBtnEvent } from './input/controller.js';
 import { createController } from './controller.js';
@@ -18,7 +18,15 @@ import {
  * Encapsulates the configuration logic to keep initApp clean.
  */
 function registerComponentConnections(handleConnection, components) {
-  const { arrayDisplay, swap } = components;
+  const {
+    arrayDisplay,
+    swap,
+    sumPos,
+    countPos,
+    findMin,
+    findSmallestPos,
+    findLastEven,
+  } = components;
 
   /**
    * Defines the connection map for component registration.
@@ -29,8 +37,13 @@ function registerComponentConnections(handleConnection, components) {
     {
       type: BINDING_TYPES.UI,
       bindings: [
-        ['swap', swap.ui],
         ['arrayDisplay', arrayDisplay.ui],
+        ['sumPos', sumPos.ui],
+        ['countPos', countPos.ui],
+        ['findMin', findMin.ui],
+        ['findSmallestPos', findSmallestPos.ui],
+        ['swap', swap.ui],
+        ['findLastEven', findLastEven.ui],
       ],
     },
     {
@@ -62,24 +75,33 @@ export function initApp() {
 
   //2. Initialize Components
   const arrayDisplay = createArrayDisplayComponent({ globalDispatch });
-  const swap = createSwapNumbersComponent({
-    globalDispatch,
-  });
 
   //3. Setup the connection utility for registering components to the register
   const handleConnection = createHandleConnection(controllerRegistry);
 
   //4. Setup Connections
-  registerComponentConnections(handleConnection, { swap, arrayDisplay });
 
   //5. setup card animation
   createCardAnimations();
 
-  //6. create Features 
-  createSumPositiveFeature();
-  initPositiveCountEvents();
-  initFindMinEvents();
-  initFindSmallestPosEvents();
-  initFindLastEvenNumberEvents(globalDispatch);
+  //6. create Features
+  const sumPos = createSumPositiveFeature();
+  const countPos = createCountPosFeature();
+  const findMin = createFindMinFeature();
+  const findSmallestPos = createFindSmallestPosFeature();
+  const findLastEven = createFindLastEvenFeature({globalDispatch});
+  const swap = createSwapNumbersFeature({
+    globalDispatch,
+  });
   initAddBtnEvent(globalDispatch);
+
+  registerComponentConnections(handleConnection, {
+    swap,
+    arrayDisplay,
+    sumPos,
+    countPos,
+    findMin,
+    findSmallestPos,
+    findLastEven,
+  });
 }

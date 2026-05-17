@@ -1,6 +1,5 @@
-import { $ } from "../index.js";
-export { numbersState } from '../../state/number-state.js';
-export {isArrayEmpty } from '../../state/number-state-services.js';
+import { $ } from "./index.js";
+
 
 /**
  * @type {Object.<string, HTMLElement>} Factory function to select and return DOM elements.

@@ -1,0 +1,1 @@
+export {waitForAnimationEnd} from "./wait-for-animation-end.js";

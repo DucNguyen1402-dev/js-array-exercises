@@ -3,7 +3,7 @@
  * @param {number[]} positiveList - Array of positive numbers.
  * @returns {number} The count of elements.
  */
-export function getPossitiveCount(positiveList) {
+export function getPosCount(positiveList) {
   return positiveList.length;
 }
 
@@ -12,6 +12,6 @@ export function getPossitiveCount(positiveList) {
  * @param {number[]} numbersState - The source array of numbers.
  * @returns {number[]} A new array containing only positive numbers.
  */
-export function getPositiveNumberList(numbersState) {
+export function getPosList(numbersState) {
   return numbersState.filter((n) => n > 0);
 }

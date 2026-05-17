@@ -1,67 +1,151 @@
-import { DOM } from './dom.js';
-import { numbersState, isArrayEmpty } from './dom.js';
-import { getPossitiveCount, getPositiveNumberList } from './task-domain.js';
 import {
-  updatePositiveNumbersCountUI,
-  resetPositiveCountUI,
-  handleArrayEmptyWarning,
-} from './ui.js';
+  countPosElements,
+  localState,
+  globalState,
+  globalStateServices,
+  taskDomain,
+  ui,
+  utils,
+  renders,
+  useCases,
+} from './deps.js';
+
 /**
- * ====================================
- *  1. UI REFERENCES (VIEW LAYER)
- * ====================================
+ * =========================================================================================
+ * FEATURE: SUM POSITIVE MODULE
+ * -----------------------------------------------------------------------------------------
+ * @module ControllerCore
+ * @description Core orchestration logic including the controller factory and dispatch system.
+ * ==========================================================================================
  */
+
 /**
- * @type {Object.<string, HTMLElement>} - UI components for positive count and display.
+ * Map of action types to their respective handler functions.
+ * @type {Object.<string, Function>}
  */
-const countPositiveUI = {
-  listContainer: DOM.listContainer,
-  positiveDisplayEl: DOM.positiveDisplayEl,
-  resultContainer: DOM.resultContainer,
-  totalDisplay: DOM.totalDisplay,
-  processingIcon: DOM.processingIcon,
-  emptyWarning: DOM.emptyWarning,
+const actionHandlers = {
+  COUNT_POS: handleCountPosNumbers,
+  RESET_COUNT_POS_UI: handleCountPosUIReset,
 };
 
 /**
- * ====================================
- *        2.CONTROLLER LOGIC
- * ===================================
+ * Factory to create a local dispatcher for handling module actions.
  *
-
-
-/**
- * Orchestrates the process of filtering positive numbers, calculating their count,
- * and updating the corresponding UI elements.
+ * @param {Object} deps - Injected dependencies for the handlers.
+ * @returns {Function} A dispatch function that accepts an action object.
  */
-
-function countPositiveNumbers() {
-  if (isArrayEmpty(numbersState)) {
-    handleArrayEmptyWarning(countPositiveUI);
-    return;
-  }
-  const positiveNumbersList = getPositiveNumberList(numbersState);
-  const positiveCount = getPossitiveCount(positiveNumbersList);
-  updatePositiveNumbersCountUI(
-    positiveNumbersList,
-    positiveCount,
-    countPositiveUI
-  );
+function createLocalDispatch(deps) {
+  /**
+   * Executes the handler associated with the action type.
+   *
+   * @param {Object} action - The action object containing a type property.
+   * @param {string} action.type - The identifier for the action to be performed.
+   */
+  const localDispatch = (action) => {
+    const actionHandler = actionHandlers[action.type];
+    actionHandler?.(deps);
+  };
+  return localDispatch;
 }
 
 /**
- * =================================
- *  3.  EVENT SETUP
- * ================================
+ * Factory function to initialize the controller for positive count features.
+ *
+ * @returns {Object} Contains DOM elements, the local dispatcher, and the re-render function.
+ */
+export function createCountPosController() {
+  const dispatchDeps = {
+    countPosElements,
+    localState,
+    globalState,
+    globalStateServices,
+    taskDomain,
+    ui,
+    utils,
+    renders,
+    useCases,
+  };
+
+  const { renderCountPosUI } = useCases;
+
+  /**
+   * Orchestrates the UI rendering based on current state and services.
+   */
+  const renderUI = () =>
+    renderCountPosUI({
+      countPosElements,
+      state: {
+        displayState: localState.displayState,
+        numbersState: globalState.numbersState,
+      },
+      renders: {
+        updateCountPosUI: renders.updateCountPosUI,
+      },
+      globalStateServices: {
+        isArrayEmpty: globalStateServices.isArrayEmpty,
+      },
+    });
+
+  renderUI(); // init
+  /** @type {Function} Local dispatcher created with injected dependencies */
+  const localDispatch = createLocalDispatch(dispatchDeps);
+
+  return { countPosElements, localDispatch, reRenderCountPosFeatureUI: renderUI };
+}
+
+/**
+ * =========================================================================================
+ * DISPATCH HANDLERS
+ * -----------------------------------------------------------------------------------------
+ * @module CountPosHandlers
+ * @description Core logic handlers for dispatching actions within the Count Positive feature.
+ * ==========================================================================================
  */
 
-export function initPositiveCountEvents() {
-  /**
-   * Attaches a click event listener to the positive number count button.
-   */
-  DOM.countPositiveBtn.addEventListener('click', countPositiveNumbers);
+/**
+ * Handler to initiate the process of counting positive numbers.
+ *
+ * @param {Object} deps - Injected dependencies from the controller.
+ */
+function handleCountPosNumbers(deps) {
+  const {
+    useCases: { countPos },
+  } = deps;
 
-  DOM.resetBtn.addEventListener('click', () => {
-    resetPositiveCountUI(countPositiveUI);
+  countPos({
+    countPosElements: deps.countPosElements,
+    localState: { displayState: deps.localState.displayState },
+    globalState: { numbersState: deps.globalState.numbersState },
+    globalStateServices: {
+      isArrayEmpty: deps.globalStateServices.isArrayEmpty,
+    },
+    taskDomain: {
+      getPosCount: deps.taskDomain.getPosCount,
+      getPosList: deps.taskDomain.getPosList,
+    },
+    utils : {clearTextContent: deps.utils.dom.clearTextContent},
+    ui: {
+      setPosListDisplay: deps.ui.setPosListDisplay,
+      setPosCountDisplay: deps.ui.setPosCountDisplay,
+      
+    },
+    renders: { updateCountPosUI: deps.renders.updateCountPosUI },
+  });
+}
+
+/**
+ * Handler to reset the positive count feature UI to its initial state.
+ *
+ * @param {Object} deps - Injected dependencies from the controller.
+ */
+function handleCountPosUIReset(deps) {
+  const {
+    useCases: { resetCountPosUI },
+  } = deps;
+
+  resetCountPosUI({
+    countPosElements: deps.countPosElements,
+    localState: { displayState: deps.localState.displayState },
+    renders: { updateCountPosUI: deps.renders.updateCountPosUI },
   });
 }

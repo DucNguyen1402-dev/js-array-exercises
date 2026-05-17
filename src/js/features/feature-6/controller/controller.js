@@ -71,7 +71,7 @@ export function createSwapController({ globalDispatch }) {
   /**
    * Aggregates required dependencies to perform a partial UI update.
    */
-  const refreshSwapSelectionUI = () => {
+  const reRenderSwapSelectionFeatureUI = () => {
     const deps = {
       ...state,
       ...renders,
@@ -85,7 +85,7 @@ export function createSwapController({ globalDispatch }) {
       dispatchers: { localDispatch },
       swapElements,
     },
-    api: { ui: {refreshSwapSelectionUI} },
+    api: { ui: {reRenderSwapSelectionFeatureUI} },
   };
 }
 

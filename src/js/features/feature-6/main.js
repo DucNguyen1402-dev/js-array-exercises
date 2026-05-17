@@ -9,7 +9,7 @@ import {intSwapPosEvents} from "./init-events.js";
  * 
  * @returns {Object} The public API of the component (e.g., methods to update/reset from outside).
  */
-export function createSwapNumbersComponent({globalDispatch}) {
+export function createSwapNumbersFeature({globalDispatch}) {
   // 1. Initialize the Controller
   // This creates the internal state, dispatchers, and orchestrator.
   const {

@@ -1,3 +1,4 @@
+import {toggleClasses} from "./index.js";
 /**
  * @module SumPositiveRenders
  * @description State-to-UI mapping and rendering logic for the sum positive feature.
@@ -8,11 +9,11 @@
  * @param {Object} state - The display state of the feature.
  * @returns {Object} Visibility configuration for UI components.
  */
-function getSumPosState(state) {
+function deriveSumPosState(state) {
   return {
     showProcessingBar: state.sumPosStatus === 'processing',
-    showDisplayList: state.sumPosStatus === 'success',
-    showSumArea: state.sumPosStatus === 'success',
+    showDisplayList: !state.emptyArray && state.sumPosStatus === 'success',
+    showSumArea: !state.emptyArray && state.sumPosStatus === 'success',
     showEmptyWarning: state.emptyArray,
   };
 }
@@ -35,8 +36,12 @@ const sumPosMap = (ctx, sumPosState) => [
  * @param {Object} ctx - DOM elements context.
  */
 export function updateSumPosUI(state, ctx) {
-  const sumPosState = getSumPosState(state);
-
+  const sumPosState = deriveSumPosState(state);
+  
+  const isDisabled = state.sumPosStatus === "disabled";
+  ctx.sumBtn.disabled=isDisabled;
+  toggleClasses(ctx.sumBtn, ["opacity-60", "pointer-events-none"], isDisabled);
+  
   sumPosMap(ctx, sumPosState).forEach(([el, shouldHide]) => {
     el.classList.toggle('hidden', shouldHide);
   });
