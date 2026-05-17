@@ -84,6 +84,9 @@ input[type='number']::-webkit-inner-spin-button {
 
 
 
+.error-message-visible {
+  --tw-translate-x: 50px !important;
+}
 
 .processing-bar-animation {
   animation: processingBarMove 0.8s ease-out forwards;

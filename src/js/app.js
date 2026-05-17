@@ -6,7 +6,7 @@ import { createFindSmallestPosFeature } from './features/feature-4/main.js';
 import { createFindLastEvenFeature } from './features/feature-5/main.js';
 import { createSwapNumbersFeature } from './features/feature-6/main.js';
 import { createArrayDisplayComponent } from './array-display/component.js';
-import { initAddBtnEvent } from './input/controller.js';
+import { createNumberInputComponent } from './number-input/component.js';
 import { createController } from './controller.js';
 import {
   createHandleConnection,
@@ -84,16 +84,18 @@ export function initApp() {
   //5. setup card animation
   createCardAnimations();
 
-  //6. create Features
+  //6. setup number input
+  createNumberInputComponent({globalDispatch});
+
+  //7. create Features
   const sumPos = createSumPositiveFeature();
   const countPos = createCountPosFeature();
   const findMin = createFindMinFeature();
   const findSmallestPos = createFindSmallestPosFeature();
-  const findLastEven = createFindLastEvenFeature({globalDispatch});
+  const findLastEven = createFindLastEvenFeature({ globalDispatch });
   const swap = createSwapNumbersFeature({
     globalDispatch,
   });
-  initAddBtnEvent(globalDispatch);
 
   registerComponentConnections(handleConnection, {
     swap,

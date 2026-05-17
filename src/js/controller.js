@@ -119,6 +119,7 @@ function handleSwapSelectionHighlightReset(action, dispatchContext) {
 
 function handleNumberStateChange(action, dispatchContext) {
   const {
+    
     ui: {
       countPos: { reRenderCountPosFeatureUI },
       sumPos: { reRenderSumPosFeatureUI },
